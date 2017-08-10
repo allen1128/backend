@@ -1,5 +1,7 @@
 package demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -55,4 +57,16 @@ public class Location {
     private String gearProvider;
     private RunnerMovementType runnerMovementType;
     private String serviceType;
+
+    public Location(){
+    }
+
+    @JsonCreator
+    public Location(@JsonProperty("runningId") String runningId){
+        this.unitInfo = new UnitInfo(runningId);
+    }
+
+    public Location(UnitInfo unitInfo){
+        this.unitInfo = unitInfo;
+    }
 }

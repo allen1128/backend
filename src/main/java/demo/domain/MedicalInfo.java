@@ -13,10 +13,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class MedicalInfo {
     private long bfr;
-      private long fmi;
+    private long fmi;
 
-    public MedicalInfo(){
-
+    public MedicalInfo() {
     }
 
     public MedicalInfo(long bfr, long fmi) {
