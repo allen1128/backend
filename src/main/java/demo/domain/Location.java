@@ -1,0 +1,58 @@
+package demo.domain;
+
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Date;
+
+/**
+ * Created by I827417 on 8/11/2017.
+ */
+
+@Data
+@Entity
+@Table(name = "LOCATION")
+public class Location {
+    enum GpsStatus {
+        EXCELLENT, OK, UNRELIABLE, BAD, NOTFIX, UNKNOWN;
+    }
+
+    public enum RunnerMovementType {
+        STOPPED, IN_MOTION;
+
+        public boolean isMoving() {
+            return this != STOPPED;
+        }
+    }
+
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "bfr", column = @Column(name = "medical_bfr")),
+            @AttributeOverride(name = "fmi", column = @Column(name = "medical_fmi"))
+    })
+    private MedicalInfo medicalInfo;
+
+
+    @Embedded
+    @AttributeOverride(name = "bandMake", column = @Column(name = "unitinfo_band_make"))
+    private UnitInfo unitInfo;
+
+    private double latitude;
+    private double longitude;
+    private String heading;
+    private double gpsSpeed;
+    private GpsStatus gpsStatus;
+    private double odometer;
+    private double totalRunningTime;
+    private double totalIdleTime;
+    private double totalCalorieBurnt;
+    private String address;
+    private Date timestamp = new Date();
+    private String gearProvider;
+    private RunnerMovementType runnerMovementType;
+    private String serviceType;
+}
