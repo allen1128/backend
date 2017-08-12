@@ -5,9 +5,6 @@ import lombok.Data;
 
 import javax.persistence.Embeddable;
 
-/**
- * Created by I827417 on 8/11/2017.
- */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Embeddable
@@ -18,6 +15,7 @@ public class UnitInfo {
     private String unitNumber;
 
     public UnitInfo() {
+        this.runningId = "";
     }
 
     public UnitInfo(String runningId) {
@@ -29,5 +27,9 @@ public class UnitInfo {
         this.bandMake = bandMake;
         this.customerName = customerName;
         this.unitNumber = unitNumber;
+    }
+
+    public String getRunningId(){
+        return runningId;
     }
 }

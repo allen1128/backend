@@ -14,4 +14,5 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     Page<Location> findByRunnerMovementType(@Param("movementType") Location.RunnerMovementType movementType, Pageable pageable);
 
     Page<Location> findByUnitInfoRunningId(@Param("runningId") String runningId, Pageable pageable);
+
 }

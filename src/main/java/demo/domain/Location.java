@@ -1,16 +1,14 @@
 package demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by I827417 on 8/11/2017.
- */
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Entity
 @Table(name = "LOCATION")
@@ -37,7 +35,6 @@ public class Location {
             @AttributeOverride(name = "fmi", column = @Column(name = "medical_fmi"))
     })
     private MedicalInfo medicalInfo;
-
 
     @Embedded
     @AttributeOverride(name = "bandMake", column = @Column(name = "unitinfo_band_make"))
@@ -68,5 +65,9 @@ public class Location {
 
     public Location(UnitInfo unitInfo){
         this.unitInfo = unitInfo;
+    }
+
+    public String getRunningId(){
+        return (this.unitInfo == null) ? null : this.unitInfo.getRunningId();
     }
 }

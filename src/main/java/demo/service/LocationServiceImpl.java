@@ -36,4 +36,9 @@ public class LocationServiceImpl implements LocationService {
     public Page<demo.domain.Location> findByRunnerId(String runnerId, Pageable pageable) {
         return locationRepository.findByUnitInfoRunningId(runnerId, pageable);
     }
+
+    @Override
+    public List<Location> findAll() {
+        return locationRepository.findAll();
+    }
 }
