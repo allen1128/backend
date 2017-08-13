@@ -8,6 +8,10 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Created by XL on 8/11/2017.
+ */
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Entity

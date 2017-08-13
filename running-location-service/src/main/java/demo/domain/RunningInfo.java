@@ -2,10 +2,13 @@ package demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.util.Date;
+
+/**
+ * Created by XL on 8/11/2017.
+ */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
@@ -17,9 +20,7 @@ public class RunningInfo {
         LOW, NORMAL, HIGH;
     }
     @Id
-    @GeneratedValue
-    String runningId;
-
+    private String runningId;
     private double latitude;
     private double longitude;
     private double runningDistance;

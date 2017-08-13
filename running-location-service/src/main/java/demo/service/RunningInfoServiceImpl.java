@@ -7,11 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 /**
- * Created by I827417 on 8/13/2017.
+ * Created by XL on 8/11/2017.
  */
+
+@Service
 public class RunningInfoServiceImpl implements RunningInfoService {
 
     @Autowired

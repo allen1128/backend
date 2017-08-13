@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Created by I827417 on 8/13/2017.
+ * Created by XL on 8/11/2017.
  */
+
 @RestController
 public class RunningInfoBulkUploadRestController {
 
     @Autowired
     RunningInfoService runningInfoService;
+
     @RequestMapping(value="runninginfo/", method= RequestMethod.POST)
     public void upload(@RequestBody List<RunningInfo> runningInfos){
         runningInfoService.saveRunningInfo(runningInfos);

@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by I827417 on 8/11/2017.
+ * Created by XL on 8/11/2017.
  */
+
 @Service
 public class LocationServiceImpl implements LocationService {
     @Autowired
