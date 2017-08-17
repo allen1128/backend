@@ -2,10 +2,7 @@ package demo.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created on 8/11/2017.
@@ -16,8 +13,11 @@ import javax.persistence.Id;
 @Table(name="USER")
 public class User {
     @Id
-    String userName;
-    String address;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+
+    private String userName;
+    private String address;
 
     public User(){
     }

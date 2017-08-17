@@ -2,8 +2,11 @@ package com.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 /**
  * Created by XL on 8/15/2017.
@@ -13,14 +16,22 @@ import javax.persistence.Embeddable;
 @Embeddable
 @Data
 public class User {
-    String userName;
-    String address;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    public User(){
+    private String username;
+    private String address;
+
+    public User() {
     }
 
-    public User(String userName, String address) {
-        this.userName = userName;
+    public User(String username) {
+        this.username = username;
+    }
+
+    public User(String username, String address) {
+        this.username = username;
         this.address = address;
     }
 }

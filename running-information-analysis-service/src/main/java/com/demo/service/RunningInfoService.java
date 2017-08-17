@@ -12,7 +12,10 @@ import java.util.List;
 
 public interface RunningInfoService {
     List<RunningInfo> saveRunningInfo(List<RunningInfo> runningInfos);
+
     RunningInfo findByRunningId(String runningId);
-    Page<RunningInfo> findByUserName(String userName, Pageable pageable);
+
+    Page<RunningInfo> findAll(Pageable pageable);
+
     void deleteByRunningId(String runningId);
 }

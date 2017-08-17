@@ -31,12 +31,12 @@ public class RunningInfoServiceImpl implements RunningInfoService {
     }
 
     @Override
-    public Page<RunningInfo> findByUserName(String userName, Pageable pageable) {
-        return runningInfoRepository.findByUserInfoUserName(userName, pageable);
+    public Page<RunningInfo> findAll(Pageable pageable) {
+        return runningInfoRepository.findAllByOrderByHealthWarningLevelDesc(pageable);
     }
 
     @Override
     public void deleteByRunningId(String runningId) {
-        runningInfoRepository.deleteByRunningId(runningId);
+        runningInfoRepository.delete(runningId);
     }
 }
