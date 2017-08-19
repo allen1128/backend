@@ -4,21 +4,20 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 
 /**
  * Created by XL on 8/15/2017.
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Embeddable
 @Data
+@Table(name="User")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.TABLE, generator="user_table_generator" )
+    @TableGenerator(name="user_table_generator", table="user_keys", pkColumnName = "pk_name", valueColumnName = "pk_value")
+    private Long userId;
 
     private String username;
     private String address;

@@ -26,11 +26,20 @@ public class RunningInfo {
     @Id
     private String runningId;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="USER_ID")
+    private User userInfo;
+
     private double latitude;
+
     private double longitude;
+
     private double runningDistance;
+
     private Date timestamp = new Date();
+
     private double totalRunningTime;
+
     private int heartRate;
 
     @Enumerated(EnumType.STRING)
@@ -41,7 +50,6 @@ public class RunningInfo {
             @AttributeOverride(name="userName", column=@Column(name="EMP_START")),
             @AttributeOverride(name="endDate", column=@Column(name="EMP_END"))
     })
-    private User userInfo;
 
     private void setHearthWarningLevel(int heartRate) {
         if (heartRate >= 60 && heartRate <= 75) {
