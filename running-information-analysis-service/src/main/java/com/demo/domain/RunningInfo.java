@@ -32,6 +32,8 @@ public class RunningInfo {
     private Date timestamp = new Date();
     private double totalRunningTime;
     private int heartRate;
+
+    @Enumerated(EnumType.STRING)
     private HealthWarningLevel healthWarningLevel = HealthWarningLevel.NORMAL;
 
     @Embedded
