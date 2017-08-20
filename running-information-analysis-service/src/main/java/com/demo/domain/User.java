@@ -2,7 +2,6 @@ package com.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 
@@ -12,11 +11,13 @@ import javax.persistence.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
+@Entity
 @Table(name="User")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator="user_table_generator" )
-    @TableGenerator(name="user_table_generator", table="user_keys", pkColumnName = "pk_name", valueColumnName = "pk_value")
+    @TableGenerator(name="user_table_generator", table="user_key", pkColumnName = "pk_name", valueColumnName = "pk_value")
     private Long userId;
 
     private String username;

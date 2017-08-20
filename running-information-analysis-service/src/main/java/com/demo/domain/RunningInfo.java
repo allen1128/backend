@@ -26,60 +26,37 @@ public class RunningInfo {
     @Id
     private String runningId;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="USER_ID")
-    private User userInfo;
+    @JoinColumn(name = "USER_ID")
+    public User userInfo;
 
+    @Column
     private double latitude;
 
+    @Column
     private double longitude;
 
+    @Column
     private double runningDistance;
 
+    @Column
     private Date timestamp = new Date();
 
+    @Column
     private double totalRunningTime;
 
+    @Column
     private int heartRate;
 
     @Enumerated(EnumType.STRING)
     private HealthWarningLevel healthWarningLevel = HealthWarningLevel.NORMAL;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name="userName", column=@Column(name="EMP_START")),
-            @AttributeOverride(name="endDate", column=@Column(name="EMP_END"))
-    })
-
-    private void setHearthWarningLevel(int heartRate) {
-        if (heartRate >= 60 && heartRate <= 75) {
-            this.healthWarningLevel = HealthWarningLevel.LOW;
-        } else if (heartRate > 75 && heartRate <= 120) {
-            this.healthWarningLevel = HealthWarningLevel.NORMAL;
-        } else if (heartRate > 120) {
-            this.healthWarningLevel = HealthWarningLevel.HIGH;
-        }
-    }
-
-    public void setHeartRate(int heartRate) {
-        if (heartRate == 0) {
-            Random random = new Random();
-            this.heartRate = random.nextInt(141) + 60;
-        }
-
-        setHearthWarningLevel(this.heartRate);
+    public RunningInfo() {
     }
 
     public RunningInfo(User userInfo) {
         this.userInfo = userInfo;
-    }
-
-    @JsonCreator
-    public RunningInfo(@JsonProperty("username") String username) {
-        this.userInfo = new User(username);
-    }
-
-    public RunningInfo() {
     }
 
     @JsonIgnore
@@ -120,5 +97,54 @@ public class RunningInfo {
     @JsonProperty
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @JsonProperty
+    public Long getUserId() {
+        return userInfo.getUserId();
+    }
+
+    @JsonProperty
+    public String getUserName() {
+        return userInfo.getUsername();
+    }
+
+    @JsonProperty
+    public String getUserAddress() {
+        return userInfo.getAddress();
+    }
+
+    @JsonIgnore
+    public User getUserInfo() {
+        return userInfo;
+    }
+
+    @JsonProperty
+    public void setUserInfo(User userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    @JsonCreator
+    public RunningInfo(@JsonProperty("username") String username) {
+        this.userInfo = new User(username);
+    }
+
+    private void setHearthWarningLevel(int heartRate) {
+        if (heartRate >= 60 && heartRate <= 75) {
+            this.healthWarningLevel = HealthWarningLevel.LOW;
+        } else if (heartRate > 75 && heartRate <= 120) {
+            this.healthWarningLevel = HealthWarningLevel.NORMAL;
+        } else if (heartRate > 120) {
+            this.healthWarningLevel = HealthWarningLevel.HIGH;
+        }
+    }
+
+    public void setHeartRate(int heartRate) {
+        if (heartRate == 0) {
+            Random random = new Random();
+            this.heartRate = random.nextInt(141) + 60;
+        }
+
+        setHearthWarningLevel(this.heartRate);
     }
 }
