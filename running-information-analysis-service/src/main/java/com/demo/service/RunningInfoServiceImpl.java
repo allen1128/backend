@@ -32,7 +32,7 @@ public class RunningInfoServiceImpl implements RunningInfoService {
 
     @Override
     public Page<RunningInfo> findAll(Pageable pageable) {
-        return runningInfoRepository.findAllByOrderByHealthWarningLevelDesc(pageable);
+        return runningInfoRepository.findAllByOrderByHeartRateDesc(pageable);
     }
 
     @Override
