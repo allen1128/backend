@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor(access= AccessLevel.PUBLIC)
 public class MedicalInfo {
+
     private String bandMake;
     private String medCode;
     private String medicalInfoId;
@@ -18,4 +19,5 @@ public class MedicalInfo {
     private String aidInstructions;
     private String fmi;
     private String bfr;
+
 }
