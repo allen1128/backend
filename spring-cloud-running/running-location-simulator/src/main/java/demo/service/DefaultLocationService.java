@@ -13,7 +13,7 @@ import java.io.InputStream;
  * Created by XL on 8/23/2017.
  */
 @Service
-public class LocationServiceImpl implements LocationService {
+public class DefaultLocationService implements LocationService {
 
     @Autowired
     private ObjectMapper objectMapper;
