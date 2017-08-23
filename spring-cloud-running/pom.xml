@@ -20,7 +20,12 @@
         <module>running-location-simulator</module>
         <module>running-location-distribution</module>
         <module>running-location-updater</module>
+        <module>running-eureka-server</module>
     </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -31,8 +36,17 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Camden.SR6</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+
 
     <repositories>
         <repository>
@@ -71,6 +85,5 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
 
 </project>
