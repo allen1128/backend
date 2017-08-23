@@ -3,12 +3,13 @@ package demo.domain;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by XL on 8/23/2017.
  */
 @Data
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class PositionInfo {
     private String runningId;
     private Point position;

@@ -1,11 +1,14 @@
 package demo.util;
 
+import com.google.maps.internal.PolylineEncoding;
+import com.google.maps.model.LatLng;
 import com.spatial4j.core.context.SpatialContext;
 import com.spatial4j.core.distance.DistanceUtils;
 import demo.domain.Point;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by XL on 8/23/2017.
@@ -67,5 +70,11 @@ public class NavUtil {
         double lon2 = lon1 + Math.atan2(x, y);
 
         return new Point(Math.toDegrees(lat2), Math.toDegrees(lon2));
+    }
+
+    public static List<Point> decodePolyline(String polyline) {
+        final List<LatLng> latLngs = PolylineEncoding.decode(polyline);
+        return latLngs.stream().map(latLng -> new Point(latLng.lat, latLng.lng))
+                .collect(Collectors.toList());
     }
 }
