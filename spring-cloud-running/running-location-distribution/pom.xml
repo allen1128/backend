@@ -10,6 +10,26 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>running-location-distribution</artifactId>
-
+    <properties>
+        <google.maps.version>0.1.16</google.maps.version>
+        <spatial4j.version>0.4.1</spatial4j.version>
+        <projectlombok.version>1.16.12</projectlombok.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${projectlombok.version}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 
 </project>
