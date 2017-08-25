@@ -7,6 +7,6 @@ This is for the first phase of the project. It includes:
 
 some explanation for the project design: the project uses the spring cloud infrastructure for implementating the microservices. Eureka 
 server is used for service registration and discovery. Zuul for API gateway. Restaurant Discovery service is an independent services.
-Food Order Service uses RabbitMQ to communicate with the Payment service.
+Food Order Service uses RabbitMQ to communicate with the Payment service. Mysql is used by each service for data persistency.
 
 
