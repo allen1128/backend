@@ -1,0 +1,35 @@
+CRUD on restaurants resources
+/restaurants/ GET,POST,DELETE
+
+SEARCH by restaurant name
+/restaurants/search/?query={query string}&fields=name GET
+
+GET restaurant info by ID
+/restaurants/{restaurantid} GET
+
+CRUD on food resources
+/restaurants/{restaurantid}/foods/ GET, POST, DELETE
+
+CRUD on orders resources
+/restaurants/{restaurantid}/orders/ GET, POST, DELETE
+
+CRUD dish to/from order
+/restaurants/{restaurantid}/orders/{orderid}/foods/{foodid} GET, POST, DELETE
+
+Pay for order
+/checkout/{orderid}/ POST
+body
+{
+	amount: double
+}
+
+
+
+
+
+
+
+
+
+
+
