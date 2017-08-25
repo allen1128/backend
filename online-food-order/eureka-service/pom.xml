@@ -8,11 +8,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>eureka-service</artifactId>
 
-    <properties>
-        <projectlombok.version>1.16.12</projectlombok.version>
-    </properties>
+    <artifactId>eureka-service</artifactId>
 
     <dependencyManagement>
         <dependencies>

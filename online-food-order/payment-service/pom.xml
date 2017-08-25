@@ -11,10 +11,6 @@
 
     <artifactId>payment-service</artifactId>
 
-    <properties>
-        <projectlombok.version>1.16.12</projectlombok.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
