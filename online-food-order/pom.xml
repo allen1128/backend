@@ -7,14 +7,15 @@
     <groupId>com.xl</groupId>
     <artifactId>online-food-order</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Online Food Order</name>
+
     <modules>
         <module>restaurant-service</module>
         <module>eureka-service</module>
         <module>order-service</module>
         <module>payment-service</module>
     </modules>
-    <packaging>pom</packaging>
-    <name>Online Food Order</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -39,6 +40,25 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!--<dependencyManagement>-->
+        <!--<dependencies>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.cloud</groupId>-->
+                <!--<artifactId>spring-cloud-starter-parent</artifactId>-->
+                <!--<version>Brixton.M2</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.cloud</groupId>-->
+                <!--<artifactId>spring-cloud-dependencies</artifactId>-->
+                <!--<version>Camden.SR6</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+        <!--</dependencies>-->
+    <!--</dependencyManagement>-->
 
     <repositories>
         <repository>
