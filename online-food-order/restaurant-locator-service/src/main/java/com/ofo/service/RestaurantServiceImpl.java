@@ -26,7 +26,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void deleteByRestaurantId(Long restaurantId) {
+    public void deleteByRestaurantId(String restaurantId) {
         restaurantRepository.delete(restaurantId);
     }
 }

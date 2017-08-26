@@ -10,5 +10,5 @@ import java.util.List;
 public interface RestaurantService {
     Restaurant findByName(String name);
     void saveRestaurantInfo(List<Restaurant> restaurants);
-    void deleteByRestaurantId(Long restaurantId);
+    void deleteByRestaurantId(String restaurantId);
 }

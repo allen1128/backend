@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface OrderService {
     Order create(Order order);
-    void pay(Long orderId);
+    void pay(String orderId);
 }

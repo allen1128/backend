@@ -4,3 +4,12 @@ server:
 spring:
   application:
     name: payment-service
+  datasource:
+    username: root
+    password:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/cs504
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL5Dialect

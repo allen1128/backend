@@ -5,6 +5,7 @@ import com.ofo.domain.Payment;
 import com.ofo.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by XL on 8/27/2017.
  */
 @Slf4j
+@Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -26,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void pay(Long orderId) {
+    public void pay(String orderId) {
         String paymentService = "http://payment-service";
         log.info("sending payment request to payment service");
         Order order = orderRepository.findOne(orderId);

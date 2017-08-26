@@ -3,12 +3,8 @@ package com.ofo.domain;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.sun.javafx.beans.IDProperty;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -19,7 +15,7 @@ import java.util.Date;
 @Entity
 public class Payment {
     @Id
-    private Long paymentId;
+    private String paymentId;
     private String paidBy;
     private float amount;
 

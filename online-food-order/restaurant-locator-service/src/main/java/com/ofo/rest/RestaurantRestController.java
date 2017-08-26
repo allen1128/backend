@@ -31,7 +31,7 @@ public class RestaurantRestController {
     }
 
     @RequestMapping(value="{restaurantid}", method=RequestMethod.DELETE)
-    public void delete(@PathVariable Long restaurantId){
+    public void delete(@PathVariable String restaurantId){
         restaurantService.deleteByRestaurantId(restaurantId);
     }
 }

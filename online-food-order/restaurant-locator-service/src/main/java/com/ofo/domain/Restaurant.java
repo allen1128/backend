@@ -4,7 +4,6 @@ import com.sun.javafx.beans.IDProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +13,7 @@ import java.util.List;
  * Created by XL on 8/26/2017.
  */
 @Data
+@Entity
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class Restaurant {
 
@@ -22,7 +22,7 @@ public class Restaurant {
     }
 
     @Id
-    private Long restaurantId;
+    private String restaurantId;
     private String name;
     private String description;
 
