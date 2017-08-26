@@ -4,11 +4,11 @@ import com.sun.javafx.beans.IDProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by XL on 8/26/2017.
@@ -17,9 +17,16 @@ import java.util.Date;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class Restaurant {
 
+    private enum CuisineType {
+        Chinese, JapaneseSushi, Thai, AmercianFastFood, French
+    }
+
+    @Id
     private Long restaurantId;
     private String name;
     private String description;
+
+    @Enumerated(EnumType.STRING)
     private CuisineType cuisineType;
 
     private float rating;
@@ -37,4 +44,7 @@ public class Restaurant {
 
     @Embedded
     private Phone phone;
+
+    @OneToMany
+    private List<Dish> dishes;
 }
