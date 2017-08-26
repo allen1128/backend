@@ -1,5 +1,6 @@
 package com.ofo.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -17,7 +18,7 @@ import java.util.*;
 public class Order {
     @Id
     private Long orderId;
-    private String orderBy;
+    private String ordedBy;
 
     @Transient
     @JsonProperty
@@ -25,9 +26,11 @@ public class Order {
 
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonIgnore
     private Date createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonIgnore
     private Date updatedAt;
 
     @ElementCollection
@@ -36,9 +39,10 @@ public class Order {
     @JsonIgnore
     private Collection<Long> dishes;
 
-    public Order(List<Long> dishes, String orderBy) {
+    @JsonCreator
+    public Order(List<Long> dishes, String ordedBy) {
         this.dishes = new ArrayList<Long>(dishes);
-        this.orderBy = orderBy;
+        this.ordedBy = ordedBy;
         this.price = calculatePrice(dishes);
     }
 

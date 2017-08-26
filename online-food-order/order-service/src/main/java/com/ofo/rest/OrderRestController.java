@@ -20,7 +20,6 @@ public class OrderRestController {
     private OrderService orderService;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value="/{createdby}")
     public Order create(@RequestBody Order order){
         return orderService.create(order);
     }

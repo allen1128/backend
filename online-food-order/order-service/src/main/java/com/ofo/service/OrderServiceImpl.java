@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
         String paymentService = "http://payment-service";
         log.info("sending payment request to payment service");
         Order order = orderRepository.findOne(orderId);
-        Payment payment = new Payment(order.getOrderBy(), order.getPrice());
+        Payment payment = new Payment(order.getOrdedBy(), order.getPrice());
         restTemplate.postForLocation(paymentService + "/api/paynow", payment);
     }
 }
