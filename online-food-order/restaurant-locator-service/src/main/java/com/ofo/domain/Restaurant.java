@@ -1,5 +1,6 @@
 package com.ofo.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.sun.javafx.beans.IDProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -47,4 +48,9 @@ public class Restaurant {
 
     @OneToMany
     private List<Dish> dishes;
+
+    @JsonCreator
+    public Restaurant(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
 }

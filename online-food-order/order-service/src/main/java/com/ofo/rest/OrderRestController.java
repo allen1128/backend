@@ -13,18 +13,19 @@ import java.util.List;
  * Created by XL on 8/27/2017.
  */
 @RestController
-@RequestMapping(value="order/")
+@RequestMapping(value = "/order")
 public class OrderRestController {
-
     @Autowired
     private OrderService orderService;
 
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Order create(@RequestBody Order order){
+    public Order create(@RequestBody Order order) {
         return orderService.create(order);
     }
 
-    public void pay(@PathVariable String orderId){
+    @RequestMapping(value = "/{orderId}", method = RequestMethod.POST)
+    public void pay(@PathVariable String orderId) {
         orderService.pay(orderId);
     }
 }

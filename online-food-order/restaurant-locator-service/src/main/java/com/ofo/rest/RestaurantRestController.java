@@ -12,25 +12,25 @@ import java.util.List;
  * Created by XL on 8/26/2017.
  */
 
-@RequestMapping(value="restaurants/")
+@RequestMapping(value="/restaurants")
 @RestController
 public class RestaurantRestController {
 
     @Autowired
     RestaurantService restaurantService;
 
-    @RequestMapping(value="search/{restaurantname}", method= RequestMethod.POST)
+    @RequestMapping(value="/search/{restaurantName}", method= RequestMethod.POST)
     public Restaurant findByRestaurantName(@PathVariable String restaurantName){
         return restaurantService.findByName(restaurantName);
     }
 
-    @RequestMapping(value="", method = RequestMethod.POST)
+    @RequestMapping(value="/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void upload(@RequestBody List<Restaurant> restaurants){
         restaurantService.saveRestaurantInfo(restaurants);
     }
 
-    @RequestMapping(value="{restaurantid}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/{restaurantId}", method=RequestMethod.DELETE)
     public void delete(@PathVariable String restaurantId){
         restaurantService.deleteByRestaurantId(restaurantId);
     }
