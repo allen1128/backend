@@ -24,4 +24,8 @@ public class OrderRestController {
     public Order create(@RequestBody Order order){
         return orderService.create(order);
     }
+
+    public void pay(@PathVariable Long orderId){
+        orderService.pay(orderId);
+    }
 }

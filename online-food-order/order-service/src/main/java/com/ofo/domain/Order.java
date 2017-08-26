@@ -2,6 +2,7 @@ package com.ofo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
@@ -10,6 +11,9 @@ import java.util.*;
 /**
  * Created by XL on 8/27/2017.
  */
+
+@Entity
+@Data
 public class Order {
     @Id
     private Long orderId;
