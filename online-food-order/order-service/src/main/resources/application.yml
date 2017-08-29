@@ -13,3 +13,7 @@ spring:
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.MySQL5Dialect
+  cloud:
+    stream:
+      bindings:
+        output: payments
