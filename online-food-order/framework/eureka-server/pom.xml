@@ -13,6 +13,7 @@
     <artifactId>eureka-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <name>Cloud Infrastructure Eureka Server</name>
 
     <dependencies>
         <dependency>
