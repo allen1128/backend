@@ -42,6 +42,6 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findOne(orderId);
         Payment payment = new Payment(order.getOrdedBy(), order.getPrice());
         //restTemplate.postForLocation(paymentService + "/api/paynow", payment);
-        this.output.send(MessageBuilder.withPayload(payment).build());
+        this.output.send(MessageBuilder.withPayload(payment.toString()).build());
     }
 }

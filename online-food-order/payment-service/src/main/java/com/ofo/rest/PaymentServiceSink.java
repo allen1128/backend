@@ -23,14 +23,12 @@ public class PaymentServiceSink {
     private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @ServiceActivator(inputChannel = Sink.INPUT)
     public void executePayment(String input) throws IOException {
         log.info("Payment input: " + input);
         Payment payload = this.objectMapper.readValue(input, Payment.class);
-        this.messagingTemplate.convertAndSend("pay", payload);
         this.messagingTemplate.convertAndSend("topic/payments", payload);
-
     }
 }

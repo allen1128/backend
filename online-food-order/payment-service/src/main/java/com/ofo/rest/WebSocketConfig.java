@@ -9,18 +9,19 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 /**
  * Created by XL on 8/30/2017.
  */
-
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer{
-    public void configureMessageBroker(MessageBrokerRegistry config){
-        config.enableSimpleBroker("topic/payments");
+public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        config.enableSimpleBroker("/topic/payments");
         config.setApplicationDestinationPrefixes("/app");
     }
 
-    //CORS
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/stomp").setAllowedOrigins("*").withSockJS();
     }
+
 }

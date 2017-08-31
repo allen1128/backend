@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping(name="/api")
+@RequestMapping(name = "/api")
 public class PaymentRestController {
     @Autowired
     PaymentService paymentService;
 
-    @RequestMapping(name="/paynow", method= RequestMethod.POST)
-    public void pay(@RequestBody Payment payment){
+    @RequestMapping(name = "/paynow", method = RequestMethod.POST)
+    public void pay(@RequestBody Payment payment) {
         paymentService.save(payment);
     }
 }
