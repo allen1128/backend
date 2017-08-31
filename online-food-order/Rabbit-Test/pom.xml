@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>test-rabbitmq</artifactId>
+    <groupId>com.xl</groupId>
+    <artifactId>RabbitTest</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
