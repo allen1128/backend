@@ -11,8 +11,8 @@
     <name>Online Food Order</name>
 
     <modules>
-        <module>restaurant-locator-service</module>
-        <module>order-service</module>
+        <module>restaurant-service</module>
+        <module>shopping-cart-service</module>
         <module>payment-service</module>
         <module>framework</module>
     </modules>
