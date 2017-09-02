@@ -11,19 +11,20 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@AllArgsConstructor(access= AccessLevel.PUBLIC)
-@Table(name="RESTAURANT_DISH")
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@Table(name = "RESTAURANT_DISH")
 public class Dish {
     @Id
-    private String dishId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long dishId;
     private float price;
     private String name;
     private String description;
 
-    public Dish(){
+    public Dish() {
     }
 
-    public Dish(String dishId) {
+    public Dish(Long dishId) {
         this.dishId = dishId;
     }
 }

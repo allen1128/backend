@@ -6,7 +6,7 @@ spring:
     name: restaurant-locator-service
   datasource:
     username: root
-    password: root
+    password:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/cs504
   jpa:

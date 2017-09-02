@@ -5,6 +5,7 @@ import com.sun.javafx.beans.IDProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,19 +17,23 @@ import java.util.List;
 @Data
 @Entity
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Restaurant {
 
-    private enum CuisineType {
+    public enum CuisineType {
         Chinese, JapaneseSushi, Thai, AmercianFastFood, French
     }
 
     @Id
-    private String restaurantId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long restaurantId;
     private String name;
     private String description;
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private CuisineType cuisineType;
+
 
     private float rating;
     private float avgPrice;
@@ -43,14 +48,11 @@ public class Restaurant {
     @Embedded
     private Address address;
 
-    @Embedded
-    private Phone phone;
-
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Dish> dishes;
 
     @JsonCreator
-    public Restaurant(String restaurantId) {
+    public Restaurant(Long restaurantId) {
         this.restaurantId = restaurantId;
     }
 }

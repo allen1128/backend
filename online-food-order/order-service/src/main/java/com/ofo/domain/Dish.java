@@ -14,7 +14,8 @@ import javax.persistence.*;
 @Entity
 public class Dish {
     @Id
-    private String dishId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long dishId;
     private float price;
     private String name;
     private String description;

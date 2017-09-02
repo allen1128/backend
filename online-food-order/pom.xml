@@ -15,8 +15,6 @@
         <module>order-service</module>
         <module>payment-service</module>
         <module>framework</module>
-        <module>test-rabbitmq</module>
-        <module>Rabbit-Test</module>
     </modules>
 
     <parent>

@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void pay(String orderId) {
+    public void pay(Long orderId) {
 //        String paymentService = "http://payment-service";
 //        log.info("sending payment request to payment service");
         Order order = orderRepository.findOne(orderId);

@@ -25,7 +25,7 @@ public class OrderRestController {
     }
 
     @RequestMapping(value = "/{orderId}", method = RequestMethod.POST)
-    public void pay(@PathVariable String orderId) {
+    public void pay(@PathVariable Long orderId) {
         orderService.pay(orderId);
     }
 }

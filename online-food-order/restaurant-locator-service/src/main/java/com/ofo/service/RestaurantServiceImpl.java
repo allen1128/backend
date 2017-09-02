@@ -16,7 +16,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     RestaurantRepository restaurantRepository;
 
     @Override
-    public Restaurant findByName(String name) {
+    public List<Restaurant> findByName(String name) {
         return restaurantRepository.findByName(name);
     }
 
@@ -26,7 +26,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void deleteByRestaurantId(String restaurantId) {
+    public void deleteByRestaurantId(Long restaurantId) {
         restaurantRepository.delete(restaurantId);
+    }
+
+    @Override
+    public List<Restaurant> findAll() {
+        return restaurantRepository.findAll();
     }
 }
