@@ -22,20 +22,38 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Payment {
     @Id
-    private String paymentId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long paymentId;
+
+    private Long cartId;
     private String paidBy;
     private float amount;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date paidAt;
+    private Date completedAt;
 
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    private CreditCard creditCard;
+
     @JsonCreator
     Payment(String paidBy, float amount){
         this.paidBy = paidBy;
         this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "paymentId='" + paymentId + '\'' +
+                ", cartId=" + cartId +
+                ", paidBy='" + paidBy + '\'' +
+                ", amount=" + amount +
+                ", completedAt=" + completedAt +
+                ", createdAt=" + createdAt +
+                ", creditCard=" + creditCard +
+                '}';
     }
 }

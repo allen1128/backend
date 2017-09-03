@@ -30,6 +30,7 @@ public class Cart {
     }
 
     private String ordedBy;
+    private String note;
 
     @Enumerated(EnumType.STRING)
     private CartType cartType;

@@ -64,18 +64,28 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void removeFromCart(Long restaurantId, Long dishId) {
+    public void removeFromCart(Long dishId) {
         log.info("sending remove request to shopping-cart-service");
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
+        bodyMap.add("userName", "xl");
         bodyMap.add("dishId", String.valueOf(dishId));
         restTemplate.postForLocation(shoppingCartService + "/cart/remove", bodyMap, String.class);
     }
 
     @Override
     public void addNoteToCart(String note) {
+        log.info("sending add note request to shopping-cart-service");
+        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
+        bodyMap.add("userName", "xl");
+        bodyMap.add("note", note);
+        restTemplate.postForLocation(shoppingCartService + "/cart/addnote", bodyMap, String.class);
     }
 
     @Override
     public void pay() {
+        log.info("sending pay request to shopping-cart-service");
+        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
+        bodyMap.add("userName", "xl");
+        restTemplate.postForLocation(shoppingCartService+"/cart/pay", bodyMap, String.class);
     }
 }

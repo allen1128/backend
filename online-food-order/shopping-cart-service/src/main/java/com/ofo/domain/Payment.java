@@ -1,5 +1,6 @@
 package com.ofo.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,19 +23,21 @@ public class Payment {
     private Long paymentId;
 
     private Long cartId;
-    private float total;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date initializedAt = new Date();
+    private String paidBy;
+    private float amount;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date completedAt;
 
+    @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date cancelledAt;
+    private Date createdAt;
 
-    public Payment(Cart cart){
-        this.cartId = cart.getCartId();
-        this.total = cart.getTotal();
+    private CreditCard creditCard;
+
+    @JsonCreator
+    Payment(String paidBy, float amount){
+        this.paidBy = paidBy;
+        this.amount = amount;
     }
 }

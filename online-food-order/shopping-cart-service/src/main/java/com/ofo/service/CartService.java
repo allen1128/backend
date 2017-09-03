@@ -2,6 +2,7 @@ package com.ofo.service;
 
 import com.ofo.domain.Cart;
 import com.ofo.domain.CartItem;
+import com.ofo.domain.Payment;
 
 import java.util.Set;
 
@@ -14,4 +15,6 @@ public interface CartService {
     void pay(String userName);
     Cart creatOrUpdate(Set<CartItem> cartItems, String userName);
     Cart remove(Long externalItemId, String userName);
+    Cart addNote(String note, String userName);
+    void updatePaymentDone(Payment payment);
 }

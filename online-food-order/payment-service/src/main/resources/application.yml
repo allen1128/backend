@@ -16,4 +16,5 @@ spring:
   cloud:
     stream:
       bindings:
-        input: payments
+        input: payments-todo
+        output: payments-done

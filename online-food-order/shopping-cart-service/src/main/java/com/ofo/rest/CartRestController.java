@@ -19,7 +19,7 @@ public class CartRestController {
     @Autowired
     private CartService cartService;
 
-    @RequestMapping(value = "/{userName}/pay", method = RequestMethod.POST)
+    @RequestMapping(value = "/pay/{userName}", method = RequestMethod.POST)
     public void pay(@PathVariable String userName ) {
         cartService.pay(userName);
     }
@@ -35,6 +35,12 @@ public class CartRestController {
     @RequestMapping(value="/remove/{userName}/{externalItemId}", method=RequestMethod.POST)
     public Long remove(@PathVariable String userName, @PathVariable Long externalItemId){
         Cart cart = cartService.remove(externalItemId, userName);
+        return cart.getCartId();
+    }
+
+    @RequestMapping(value="/addnote", method=RequestMethod.POST)
+    public Long addNote(@PathVariable String userName, @PathVariable String note){
+        Cart cart = cartService.addNote(note, userName);
         return cart.getCartId();
     }
 

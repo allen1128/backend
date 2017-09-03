@@ -63,7 +63,7 @@ public class CartServiceImpl implements CartService {
         if (payment == null){
             payment = new Payment();
             payment.setCartId(cart.getCartId());
-            payment.setTotal(cart.getTotal());
+            payment.setAmount(cart.getTotal());
             paymentRepository.save(payment);
         }
         this.output.send(MessageBuilder.withPayload(payment).build());
@@ -93,5 +93,22 @@ public class CartServiceImpl implements CartService {
             cart.getCartItems().remove(ci);
         }
         return cart;
+    }
+
+    @Override
+    public Cart addNote(String note, String userName) {
+        Cart cart = cartRepository.findByOrderBy(userName);
+        if (cart != null){
+            cart.setNote(note);
+            cartRepository.save(cart);
+        }
+        return cart;
+    }
+
+    @Override
+    public void updatePaymentDone(Payment payment) {
+        Payment curr = paymentRepository.getOne(payment.getPaymentId());
+        curr.setCompletedAt(payment.getCompletedAt());
+        paymentRepository.save(curr);
     }
 }

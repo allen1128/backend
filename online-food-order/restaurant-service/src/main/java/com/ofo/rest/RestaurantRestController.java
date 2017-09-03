@@ -44,19 +44,24 @@ public class RestaurantRestController {
         restaurantService.deleteByRestaurantId(restaurantId);
     }
 
-    @RequestMapping(value="/addtocart/{restaurantId}/{dishId}/{quantity}", method=RequestMethod.POST)
-    public void addToCart(@PathVariable Long restaurantId, @PathVariable Long dishId, @PathVariable int quantity){
-        restaurantService.addToCart(restaurantId, dishId, quantity);
+    @RequestMapping(value="/addtocart/{dishId}/{quantity}", method=RequestMethod.POST)
+    public void addToCart(@PathVariable Long dishId, @PathVariable int quantity){
+        restaurantService.addToCart(dishId, quantity);
     }
 
-    @RequestMapping(value="/remotefromcart/{restaurantId}/{dishId}", method=RequestMethod.POST)
-    public void remoteFromCart(@PathVariable Long restaurantId, @PathVariable Long dishId){
-        restaurantService.removeFromCart(restaurantId, dishId);
+    @RequestMapping(value="/remotefromcart/{dishId}", method=RequestMethod.POST)
+    public void remoteFromCart(@PathVariable Long dishId){
+        restaurantService.removeFromCart(dishId);
     }
 
     @RequestMapping(value="/addnotetocart", method=RequestMethod.POST)
     public void addNote(@RequestBody String note){
         restaurantService.addNoteToCart(note);
+    }
+
+    @RequestMapping(value="pay", method = RequestMethod.POST)
+    public void pay(){
+        restaurantService.pay();
     }
 
     @RequestMapping(value="/testcreate", method=RequestMethod.POST)
