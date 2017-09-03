@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,22 +17,25 @@ import java.util.Set;
 @RequestMapping(value = "/cart")
 public class CartRestController {
     @Autowired
-    private CartService orderService;
+    private CartService cartService;
 
-    @RequestMapping(value = "/{userName}", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public Cart create(@RequestBody Set<CartItem> cartItems, @PathVariable String userName) {
-        return orderService.create(cartItems, userName);
+    @RequestMapping(value = "/{userName}/pay", method = RequestMethod.POST)
+    public void pay(@PathVariable String userName ) {
+        cartService.pay(userName);
     }
 
-    @RequestMapping(value = "/{cartId}/add", method = RequestMethod.POST)
-    public Cart update(@PathVariable Long cartId, @RequestBody Set<CartItem> cartItems) {
-        return orderService.update(cartId, cartItems);
+    @RequestMapping(value="/add/{userName}/{externalItemId}/{price}/{name}/{quantity}", method=RequestMethod.POST)
+    public Long add(@PathVariable String userName, @PathVariable Long externalItemId, @PathVariable float price, @PathVariable String name, @PathVariable int quantity){
+        Set<CartItem> cartItems = new HashSet<CartItem>();
+        cartItems.add(new CartItem(externalItemId, price, name, quantity));
+        Cart cart = cartService.creatOrUpdate(cartItems, userName);
+        return cart.getCartId();
     }
 
-    @RequestMapping(value = "/{cartId}/pay", method = RequestMethod.POST)
-    public void pay(@PathVariable Long orderId) {
-        orderService.pay(orderId);
+    @RequestMapping(value="/remove/{userName}/{externalItemId}", method=RequestMethod.POST)
+    public Long remove(@PathVariable String userName, @PathVariable Long externalItemId){
+        Cart cart = cartService.remove(externalItemId, userName);
+        return cart.getCartId();
     }
 
 }

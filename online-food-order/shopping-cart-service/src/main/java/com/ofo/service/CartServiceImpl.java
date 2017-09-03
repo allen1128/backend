@@ -6,15 +6,14 @@ import com.ofo.domain.Payment;
 import com.ofo.repository.CartRepository;
 import com.ofo.repository.PaymentRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.integration.support.MessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,20 +34,6 @@ public class CartServiceImpl implements CartService {
     private MessageChannel output;
 
     private RestTemplate restTemplate = new RestTemplate();
-
-    @Override
-    public Cart create(Cart cart) {
-        return cartRepository.save(cart);
-    }
-
-    @Override
-    public Cart create(Set<CartItem> cartItems, String userName) {
-        Cart cart = new Cart();
-        cart.setOrdedBy(userName);
-        cart.setCartItems(cartItems);
-        cartRepository.save(cart);
-        return cart;
-    }
 
     @Override
     public Cart update(Long cartId, Set<CartItem> cartItems) {
@@ -72,12 +57,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void pay(Long orderId) {
-//        String paymentService = "http://payment-service";
-//        log.info("sending payment request to payment service");
-        Cart cart = cartRepository.findOne(orderId);
-        //Payment payment = new Payment(cart.getOrdedBy(), cart.getTotal());
-        //restTemplate.postForLocation(paymentService + "/api/paynow", payment);
+    public void pay(String userName) {
+        Cart cart = cartRepository.findByOrderBy(userName);
         Payment payment = paymentRepository.findByCartId(cart.getCartId());
         if (payment == null){
             payment = new Payment();
@@ -86,5 +67,31 @@ public class CartServiceImpl implements CartService {
             paymentRepository.save(payment);
         }
         this.output.send(MessageBuilder.withPayload(payment).build());
+    }
+
+    @Override
+    public Cart creatOrUpdate(Set<CartItem> cartItems, String userName) {
+        Cart cart = cartRepository.findByOrderBy(userName);
+
+        if (cart != null) {
+            for (CartItem ci : cartItems){
+                if (cart.getCartItems().contains(ci)){
+                    cart.getCartItems().remove(ci);
+                }
+                cart.getCartItems().add(ci);
+            }
+            cartRepository.save(cart);
+        }
+        return cart;
+    }
+
+    @Override
+    public Cart remove(Long externalItemId, String userName) {
+        Cart cart = cartRepository.findByOrderBy(userName);
+        if (cart != null){
+            CartItem ci = new CartItem(externalItemId);
+            cart.getCartItems().remove(ci);
+        }
+        return cart;
     }
 }

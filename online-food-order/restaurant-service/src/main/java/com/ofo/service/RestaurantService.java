@@ -12,4 +12,9 @@ public interface RestaurantService {
     void saveRestaurantInfo(List<Restaurant> restaurants);
     void deleteByRestaurantId(Long restaurantId);
     List<Restaurant> findAll();
+
+    void addToCart(Long dishId, int quantity);
+    void removeFromCart(Long restaurantId, Long dishId);
+    void addNoteToCart(String note);
+    void pay();
 }

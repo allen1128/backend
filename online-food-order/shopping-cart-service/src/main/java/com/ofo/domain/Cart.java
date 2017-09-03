@@ -25,7 +25,14 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartId;
 
+    public enum CartType {
+        FOOD, MUSIC, SPORTS
+    }
+
     private String ordedBy;
+
+    @Enumerated(EnumType.STRING)
+    private CartType cartType;
 
     @Transient
     @JsonProperty
