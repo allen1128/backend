@@ -29,7 +29,7 @@ public class Cart {
         FOOD, MUSIC, SPORTS
     }
 
-    private String ordedBy;
+    private String orderBy;
     private String note;
 
     @Enumerated(EnumType.STRING)

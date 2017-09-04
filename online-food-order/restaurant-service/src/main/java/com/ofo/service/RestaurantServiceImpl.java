@@ -1,5 +1,6 @@
 package com.ofo.service;
 
+import com.ofo.domain.CreditCard;
 import com.ofo.domain.Dish;
 import com.ofo.domain.Restaurant;
 import com.ofo.repository.DishRepository;
@@ -84,14 +85,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void pay(Map creditCardInfo) {
+    public void pay(CreditCard creditCard) {
         log.info("sending pay request to shopping-cart-service");
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
 
         bodyMap.add("userName", "xl");
-        bodyMap.add("cardNumber", creditCardInfo.get("cardNumber").toString());
-        bodyMap.add("expirationDate", creditCardInfo.get("expirationDate").toString());
-        bodyMap.add("securityCode", creditCardInfo.get("securityCode").toString());
+        bodyMap.add("cardNumber", creditCard.getCardNumber());
+        bodyMap.add("expirationDate", creditCard.getExpirationDate());
+        bodyMap.add("securityCode", creditCard.getSecurityCode());
 
         restTemplate.postForLocation(shoppingCartService+"/cart/pay", bodyMap, String.class);
     }

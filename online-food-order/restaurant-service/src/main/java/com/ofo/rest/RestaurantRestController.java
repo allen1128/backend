@@ -1,6 +1,7 @@
 package com.ofo.rest;
 
 import com.ofo.domain.Address;
+import com.ofo.domain.CreditCard;
 import com.ofo.domain.Dish;
 import com.ofo.domain.Restaurant;
 import com.ofo.service.RestaurantService;
@@ -61,8 +62,8 @@ public class RestaurantRestController {
     }
 
     @RequestMapping(value="pay", method = RequestMethod.POST)
-    public void pay(@RequestBody Map creditCardInfo){
-        restaurantService.pay(creditCardInfo);
+    public void pay(@RequestBody CreditCard creditCard){
+        restaurantService.pay(creditCard);
     }
 
     @RequestMapping(value="/testcreate", method=RequestMethod.POST)

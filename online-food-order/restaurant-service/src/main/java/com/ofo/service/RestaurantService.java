@@ -1,5 +1,6 @@
 package com.ofo.service;
 
+import com.ofo.domain.CreditCard;
 import com.ofo.domain.Restaurant;
 
 import java.util.List;
@@ -17,5 +18,5 @@ public interface RestaurantService {
     void addToCart(Long dishId, int quantity);
     void removeFromCart(Long dishId);
     void addNoteToCart(String note);
-    void pay(Map creditCardInfo);
+    void pay(CreditCard creditCard);
 }
