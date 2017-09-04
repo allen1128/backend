@@ -16,7 +16,7 @@ public class PaymentRestController {
     PaymentService paymentService;
 
     @RequestMapping(name = "/paynow", method = RequestMethod.POST)
-    public void pay(@RequestBody Payment payment) {
-        paymentService.save(payment);
+    public void pay(@RequestBody Payment payment) throws InterruptedException {
+        paymentService.process(payment);
     }
 }

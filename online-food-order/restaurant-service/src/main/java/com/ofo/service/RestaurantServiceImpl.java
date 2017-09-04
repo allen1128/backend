@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by XL on 8/26/2017.
@@ -63,6 +64,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         restTemplate.postForLocation(shoppingCartService + "/cart/add", bodyMap, String.class);
     }
 
+
     @Override
     public void removeFromCart(Long dishId) {
         log.info("sending remove request to shopping-cart-service");
@@ -82,10 +84,15 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void pay() {
+    public void pay(Map creditCardInfo) {
         log.info("sending pay request to shopping-cart-service");
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
+
         bodyMap.add("userName", "xl");
+        bodyMap.add("cardNumber", creditCardInfo.get("cardNumber").toString());
+        bodyMap.add("expirationDate", creditCardInfo.get("expirationDate").toString());
+        bodyMap.add("securityCode", creditCardInfo.get("securityCode").toString());
+
         restTemplate.postForLocation(shoppingCartService+"/cart/pay", bodyMap, String.class);
     }
 }

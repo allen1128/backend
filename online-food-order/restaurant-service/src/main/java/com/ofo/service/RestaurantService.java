@@ -3,6 +3,7 @@ package com.ofo.service;
 import com.ofo.domain.Restaurant;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by XL on 8/26/2017.
@@ -16,5 +17,5 @@ public interface RestaurantService {
     void addToCart(Long dishId, int quantity);
     void removeFromCart(Long dishId);
     void addNoteToCart(String note);
-    void pay();
+    void pay(Map creditCardInfo);
 }

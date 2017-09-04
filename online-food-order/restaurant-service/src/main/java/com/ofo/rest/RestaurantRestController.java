@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by XL on 8/26/2017.
@@ -60,8 +61,8 @@ public class RestaurantRestController {
     }
 
     @RequestMapping(value="pay", method = RequestMethod.POST)
-    public void pay(){
-        restaurantService.pay();
+    public void pay(@RequestBody Map creditCardInfo){
+        restaurantService.pay(creditCardInfo);
     }
 
     @RequestMapping(value="/testcreate", method=RequestMethod.POST)
