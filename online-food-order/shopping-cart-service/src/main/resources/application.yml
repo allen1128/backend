@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: order-service
+    name: shopping-cart-service
   datasource:
     username: root
     password:
@@ -18,3 +18,8 @@ spring:
       bindings:
         output: payments-todo
         input: payments-done
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

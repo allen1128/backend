@@ -3,11 +3,13 @@ package com.ofo.rest;
 import com.ofo.domain.Cart;
 import com.ofo.domain.CartItem;
 import com.ofo.service.CartService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -15,14 +17,22 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping(value = "/cart")
+@Slf4j
 public class CartRestController {
     @Autowired
     private CartService cartService;
 
     //TODO
-    @RequestMapping(value = "/pay/{userName}", method = RequestMethod.POST)
-    public void pay(@PathVariable String userName ) {
-        cartService.pay(userName);
+//    @RequestMapping(value = "/pay/{userName}", method = RequestMethod.POST)
+//    public void pay(@PathVariable String userName ) {
+//        cartService.pay(userName);
+//    }
+
+
+    @RequestMapping(value = "/pay", method = RequestMethod.POST)
+    public void pay(@RequestBody Map paymentInfo ) {
+        log.info(paymentInfo.keySet().toString());
+        //cartService.pay(userName);
     }
 
     @RequestMapping(value="/add/{userName}/{externalItemId}/{price}/{name}/{quantity}", method=RequestMethod.POST)

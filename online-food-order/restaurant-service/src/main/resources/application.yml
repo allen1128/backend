@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: restaurant-locator-service
+    name: restaurant-service
   datasource:
     username: root
     password:
@@ -13,3 +13,8 @@ spring:
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.MySQL5Dialect
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

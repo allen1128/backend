@@ -1,5 +1,7 @@
 package com.ofo.service;
 
+import com.netflix.discovery.DiscoveryClient;
+import com.netflix.discovery.converters.Auto;
 import com.ofo.domain.CreditCard;
 import com.ofo.domain.Dish;
 import com.ofo.domain.Restaurant;
@@ -7,6 +9,7 @@ import com.ofo.repository.DishRepository;
 import com.ofo.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -28,7 +31,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     DishRepository dishRepository;
 
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    RestTemplate restTemplate;
 
     String shoppingCartService = "http://shopping-cart-service";
 
@@ -83,6 +87,12 @@ public class RestaurantServiceImpl implements RestaurantService {
         bodyMap.add("note", note);
         restTemplate.postForLocation(shoppingCartService + "/cart/addnote", bodyMap, String.class);
     }
+//    @Override
+//    public void pay(CreditCard creditCard) {
+//        log.info("sending pay request to shopping-cart-service");
+//        String str = restTemplate.getForObject(shoppingCartService+"/cart/pay", String.class);
+//        log.info("getting the pay resut from the shopping-cart-service:" + str);
+//    }
 
     @Override
     public void pay(CreditCard creditCard) {
