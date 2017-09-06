@@ -10,6 +10,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/cs504
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.MySQL5Dialect

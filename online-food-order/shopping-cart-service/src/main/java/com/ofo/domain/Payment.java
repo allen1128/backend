@@ -32,11 +32,19 @@ public class Payment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    @Embedded
     private CreditCard creditCard;
 
     @JsonCreator
     Payment(String paidBy, float amount){
         this.paidBy = paidBy;
+        this.amount = amount;
+    }
+
+
+    public Payment(CreditCard creditCard, Long cartId, float amount) {
+        this.creditCard = creditCard;
+        this.cartId = cartId;
         this.amount = amount;
     }
 }

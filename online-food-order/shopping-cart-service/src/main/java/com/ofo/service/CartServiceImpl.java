@@ -2,6 +2,7 @@ package com.ofo.service;
 
 import com.ofo.domain.Cart;
 import com.ofo.domain.CartItem;
+import com.ofo.domain.CreditCard;
 import com.ofo.domain.Payment;
 import com.ofo.repository.CartRepository;
 import com.ofo.repository.PaymentRepository;
@@ -57,13 +58,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void pay(String userName) {
-        Cart cart = cartRepository.findByOrderBy(userName);
+    public void pay(CreditCard creditCard) {
+        Cart cart = cartRepository.findByOrderBy(creditCard.getUserName());
         Payment payment = paymentRepository.findByCartId(cart.getCartId());
+
         if (payment == null){
-            payment = new Payment();
-            payment.setCartId(cart.getCartId());
-            payment.setAmount(cart.getTotal());
+            payment = new Payment(creditCard, cart.getCartId(), cart.getTotal());
             paymentRepository.save(payment);
         }
         this.output.send(MessageBuilder.withPayload(payment).build());

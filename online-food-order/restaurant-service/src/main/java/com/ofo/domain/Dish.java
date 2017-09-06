@@ -1,5 +1,6 @@
 package com.ofo.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,8 +24,10 @@ public class Dish {
     private String name;
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="RESTAURANT_ID", nullable = false, referencedColumnName = "RESTAURANT_ID")
     private Restaurant restaurant;
+
 
     public Dish(Long dishId) {
         this.dishId = dishId;

@@ -16,6 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +67,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         bodyMap.add("dishId", String.valueOf(dishId));
         bodyMap.add("dishPrice", String.valueOf(dish.getPrice()));
         bodyMap.add("quantity", String.valueOf(quantity));
-        restTemplate.postForLocation(shoppingCartService + "/cart/add", bodyMap, String.class);
+        Long cartId = restTemplate.postForObject(shoppingCartService + "/cart/add", bodyMap, Long.class);
     }
 
 
@@ -76,16 +77,21 @@ public class RestaurantServiceImpl implements RestaurantService {
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
         bodyMap.add("userName", "xl");
         bodyMap.add("dishId", String.valueOf(dishId));
-        restTemplate.postForLocation(shoppingCartService + "/cart/remove", bodyMap, String.class);
+        Long cartId = restTemplate.postForObject(shoppingCartService + "/cart/remote", bodyMap, Long.class);
     }
 
     @Override
     public void addNoteToCart(String note) {
         log.info("sending add note request to shopping-cart-service");
-        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
+        //MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
+        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<>();
         bodyMap.add("userName", "xl");
         bodyMap.add("note", note);
-        restTemplate.postForLocation(shoppingCartService + "/cart/addnote", bodyMap, String.class);
+
+        //bodyMap.add("userName", "xl");
+        Long cartId = restTemplate.postForObject(shoppingCartService + "/cart/addnote", bodyMap, Long.class);
+        log.info("response from shopping cart service " + cartId);
+
     }
 //    @Override
 //    public void pay(CreditCard creditCard) {
@@ -98,12 +104,10 @@ public class RestaurantServiceImpl implements RestaurantService {
     public void pay(CreditCard creditCard) {
         log.info("sending pay request to shopping-cart-service");
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
-
         bodyMap.add("userName", "xl");
         bodyMap.add("cardNumber", creditCard.getCardNumber());
         bodyMap.add("expirationDate", creditCard.getExpirationDate());
         bodyMap.add("securityCode", creditCard.getSecurityCode());
-
-        restTemplate.postForLocation(shoppingCartService+"/cart/pay", bodyMap, String.class);
+        restTemplate.postForObject(shoppingCartService+"/cart/pay", creditCard, String.class);
     }
 }

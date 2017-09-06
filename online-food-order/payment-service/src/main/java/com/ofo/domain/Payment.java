@@ -36,6 +36,7 @@ public class Payment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    @Embedded
     private CreditCard creditCard;
 
     @JsonCreator

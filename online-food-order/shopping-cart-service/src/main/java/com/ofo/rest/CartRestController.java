@@ -2,12 +2,15 @@ package com.ofo.rest;
 
 import com.ofo.domain.Cart;
 import com.ofo.domain.CartItem;
+import com.ofo.domain.CreditCard;
 import com.ofo.service.CartService;
+import jdk.nashorn.internal.parser.JSONParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -30,27 +33,26 @@ public class CartRestController {
 
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public void pay(@RequestBody Map paymentInfo ) {
-        log.info(paymentInfo.keySet().toString());
-        //cartService.pay(userName);
+    public void pay(CreditCard creditCard ) {
+        cartService.pay(creditCard);
     }
 
-    @RequestMapping(value="/add/{userName}/{externalItemId}/{price}/{name}/{quantity}", method=RequestMethod.POST)
-    public Long add(@PathVariable String userName, @PathVariable Long externalItemId, @PathVariable float price, @PathVariable String name, @PathVariable int quantity){
-        Set<CartItem> cartItems = new HashSet<CartItem>();
+    @RequestMapping(value="/add/", method=RequestMethod.POST)
+    public Long add(String userName, Long externalItemId, float price, String name, int quantity){
+        Set<CartItem> cartItems = new HashSet<>();
         cartItems.add(new CartItem(externalItemId, price, name, quantity));
         Cart cart = cartService.creatOrUpdate(cartItems, userName);
         return cart.getCartId();
     }
 
-    @RequestMapping(value="/remove/{userName}/{externalItemId}", method=RequestMethod.POST)
-    public Long remove(@PathVariable String userName, @PathVariable Long externalItemId){
+    @RequestMapping(value="/remove/", method=RequestMethod.POST)
+    public Long remove(String userName, Long externalItemId){
         Cart cart = cartService.remove(externalItemId, userName);
         return cart.getCartId();
     }
 
     @RequestMapping(value="/addnote", method=RequestMethod.POST)
-    public Long addNote(@PathVariable String userName, @PathVariable String note){
+    public Long addNote(String note, String userName){
         Cart cart = cartService.addNote(note, userName);
         return cart.getCartId();
     }
