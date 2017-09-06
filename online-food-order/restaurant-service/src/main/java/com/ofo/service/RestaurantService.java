@@ -4,7 +4,6 @@ import com.ofo.domain.CreditCard;
 import com.ofo.domain.Restaurant;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by XL on 8/26/2017.
@@ -18,6 +17,6 @@ public interface RestaurantService {
     Long addToCart(Long dishId, int quantity);
     Long removeFromCart(Long dishId);
     Long addNoteToCart(String note);
-    Long pay(CreditCard creditCard);
+    boolean pay(Long cartId, CreditCard creditCard);
     Restaurant findOne(Long restaurantId);
 }

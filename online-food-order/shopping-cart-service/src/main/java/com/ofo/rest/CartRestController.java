@@ -1,5 +1,6 @@
 package com.ofo.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ofo.domain.Cart;
 import com.ofo.domain.CartItem;
 import com.ofo.domain.CreditCard;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,16 +27,21 @@ public class CartRestController {
     @Autowired
     private CartService cartService;
 
-    //TODO
-//    @RequestMapping(value = "/pay/{userName}", method = RequestMethod.POST)
-//    public void pay(@PathVariable String userName ) {
-//        cartService.pay(userName);
-//    }
-
+    @Autowired
+    ObjectMapper objectMapper;
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public void pay(String userName, CreditCard creditCard) {
-        cartService.pay(creditCard, userName);
+    public boolean pay(Long cartId, String creditCardStr) {
+        boolean result = false;
+
+        try {
+            CreditCard creditCard = this.objectMapper.readValue(creditCardStr, CreditCard.class);
+            result = cartService.pay(cartId, creditCard);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return result;
+        }
     }
 
     @RequestMapping(value="/add", method=RequestMethod.POST)

@@ -26,9 +26,8 @@ public class PaymentServiceSink {
     private ObjectMapper objectMapper;
 
     @ServiceActivator(inputChannel = Sink.INPUT)
-    public void notifyPaymentDone(String input) throws IOException {
-        log.info("Payment done input: " + input);
-        Payment payment = this.objectMapper.readValue(input, Payment.class);
+    public void notifyPaymentDone(Payment payment) throws IOException {
+        log.info("receiving payment done info from payment-service");
         cartService.updatePaymentDone(payment);
     }
 }

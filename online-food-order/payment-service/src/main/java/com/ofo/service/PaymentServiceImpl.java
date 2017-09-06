@@ -30,7 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
     public void process(Payment payment) throws InterruptedException {
         payment.setCreatedAt(new Date());
         //call the credit card companies apis
-        Thread.sleep(5000);
+        Thread.sleep(2000);
 
         payment.setCompletedAt(new Date());
         paymentRepository.save(payment);

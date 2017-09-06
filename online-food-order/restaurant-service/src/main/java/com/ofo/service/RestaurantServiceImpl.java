@@ -1,24 +1,21 @@
 package com.ofo.service;
 
-import com.netflix.discovery.DiscoveryClient;
-import com.netflix.discovery.converters.Auto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ofo.domain.CreditCard;
 import com.ofo.domain.Dish;
 import com.ofo.domain.Restaurant;
 import com.ofo.repository.DishRepository;
 import com.ofo.repository.RestaurantRepository;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by XL on 8/26/2017.
@@ -31,6 +28,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Autowired
     DishRepository dishRepository;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Autowired
     RestTemplate restTemplate;
@@ -92,13 +92,19 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Long pay(CreditCard creditCard) {
+    public boolean pay(Long cartId, CreditCard creditCard) {
+        boolean result = false;
         log.info("sending pay request to shopping-cart-service");
-        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
-        bodyMap.add("userName", "xl");
-        bodyMap.add("cardNumber", creditCard.getCardNumber());
-        bodyMap.add("expirationDate", creditCard.getExpirationDate());
-        bodyMap.add("securityCode", creditCard.getSecurityCode());
-        return restTemplate.postForObject(shoppingCartService+"/cart/pay", creditCard, Long.class);
+        MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<String, Object>();
+        try {
+            String creditCardStr = objectMapper.writeValueAsString(creditCard);
+            bodyMap.add("creditCardStr", creditCardStr);
+            bodyMap.add("cartId", cartId);
+            result = restTemplate.postForObject(shoppingCartService+"/cart/pay", bodyMap, Boolean.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } finally{
+            return result;
+        }
     }
 }

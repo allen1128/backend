@@ -12,7 +12,6 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class CreditCard {
-    String userName;
     String cardNumber;
     String expirationDate;
     String securityCode;

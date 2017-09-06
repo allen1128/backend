@@ -16,7 +16,7 @@ import java.util.Date;
  */
 
 @Data
-@Entity
+@Entity(name="PAYMENT")
 @NoArgsConstructor(access= AccessLevel.PUBLIC)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -26,7 +26,6 @@ public class Payment {
     private Long paymentId;
 
     private Long cartId;
-    private String paidBy;
     private float amount;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,8 +39,7 @@ public class Payment {
     private CreditCard creditCard;
 
     @JsonCreator
-    Payment(String paidBy, float amount){
-        this.paidBy = paidBy;
+    Payment(float amount){
         this.amount = amount;
     }
 
@@ -50,7 +48,6 @@ public class Payment {
         return "Payment{" +
                 "paymentId='" + paymentId + '\'' +
                 ", cartId=" + cartId +
-                ", paidBy='" + paidBy + '\'' +
                 ", amount=" + amount +
                 ", completedAt=" + completedAt +
                 ", createdAt=" + createdAt +

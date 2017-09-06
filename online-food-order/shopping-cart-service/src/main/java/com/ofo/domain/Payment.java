@@ -15,14 +15,13 @@ import java.util.Date;
 @Data
 @AllArgsConstructor(access=AccessLevel.PUBLIC)
 @NoArgsConstructor(access= AccessLevel.PUBLIC)
-@Entity
+@Entity(name="CART_PAYMENT")
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long paymentId;
 
     private Long cartId;
-    private String paidBy;
     private float amount;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -30,21 +29,20 @@ public class Payment {
 
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private Date createdAt = new Date();
 
     @Embedded
+    @Transient
     private CreditCard creditCard;
 
     @JsonCreator
-    Payment(String paidBy, float amount){
-        this.paidBy = paidBy;
+    Payment(float amount){
         this.amount = amount;
     }
 
-
-    public Payment(CreditCard creditCard, Long cartId, float amount) {
+    public Payment(CreditCard creditCard, Long cartId, float total) {
         this.creditCard = creditCard;
         this.cartId = cartId;
-        this.amount = amount;
+        this.amount = total;
     }
 }

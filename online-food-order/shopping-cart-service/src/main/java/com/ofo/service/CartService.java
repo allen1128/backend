@@ -13,7 +13,7 @@ import java.util.Set;
 public interface CartService {
     Cart update(Long cartId, Set<CartItem> cartItems);
     boolean isPaid(Long cartId);
-    void pay(CreditCard creditCard, String userName);
+    boolean pay(Long cartId, CreditCard creditCard);
     Cart creatOrUpdateCartItem(CartItem cartItem, String userName);
     Cart removeCartItemById(Long externalItemId, String userName);
     Cart addNote(String note, String userName);

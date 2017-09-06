@@ -34,4 +34,10 @@ public class PaymentServiceSink {
 
         //this.messagingTemplate.convertAndSend("topic/payments", payment);
     }
+
+    @ServiceActivator(inputChannel = Sink.INPUT)
+    public void executePayment(Payment payment) throws IOException, InterruptedException {
+        paymentService.process(payment);
+        //this.messagingTemplate.convertAndSend("topic/payments", payment);
+    }
 }

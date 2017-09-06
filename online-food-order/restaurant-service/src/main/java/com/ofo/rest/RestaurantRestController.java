@@ -66,8 +66,8 @@ public class RestaurantRestController {
         return restaurantService.addNoteToCart(note);
     }
 
-    @RequestMapping(value="pay", method = RequestMethod.POST)
-    public Long pay(@RequestBody CreditCard creditCard){
-        return restaurantService.pay(creditCard);
+    @RequestMapping(value="pay/{cartId}", method = RequestMethod.POST)
+    public boolean pay(@PathVariable Long cartId, @RequestBody CreditCard creditCard){
+        return restaurantService.pay(cartId, creditCard);
     }
 }

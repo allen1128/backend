@@ -50,16 +50,16 @@ public class Cart {
     private Date updatedAt = new Date();
 
     @ElementCollection
-    @CollectionTable(name = "ORDER_ITEMS", joinColumns = @JoinColumn(name = "ORDER_ID"))
-    @Column(name = "ORDER_ITEM_ID")
+    @CollectionTable(name = "CART_ITEMS", joinColumns = @JoinColumn(name = "CART_ID"))
+    @Column(name = "CART_ITEM_ID")
     @JsonIgnore
     private Set<CartItem> cartItems = new HashSet<>();
 
 
-    public Cart(String orderBy) {
+    public Cart(String orderBy, CartType cartType) {
         this.orderBy = orderBy;
+        this.cartType = cartType;
     }
-
 
     public float getTotal(Set<CartItem> cartItems) {
         this.total = 0.0f;

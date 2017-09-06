@@ -59,15 +59,23 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void pay(CreditCard creditCard, String userName) {
-        Cart cart = cartRepository.findByOrderBy(userName);
-        Payment payment = paymentRepository.findByCartId(cart.getCartId());
+    public boolean pay(Long cartId, CreditCard creditCard) {
+        Cart cart = cartRepository.findOne(cartId);
+        Payment payment = paymentRepository.findByCartId(cartId);
+
+        if (payment != null && payment.getCompletedAt() != null){
+            return true; //paid
+        }
 
         if (payment == null) {
             payment = new Payment(creditCard, cart.getCartId(), cart.getTotal());
             paymentRepository.save(payment);
-            this.output.send(MessageBuilder.withPayload(payment).build());
+        } else {
+            payment.setCreditCard(creditCard);
         }
+
+        this.output.send(MessageBuilder.withPayload(payment).build());
+        return false;
     }
 
     @Override
@@ -75,7 +83,7 @@ public class CartServiceImpl implements CartService {
         Cart cart = cartRepository.findByOrderBy(userName);
 
         if (cart == null) {
-            cart = new Cart(userName);
+            cart = new Cart(userName, CartType.FOOD);
         }
 
         cart.updateCartItem(cartItem);
@@ -105,7 +113,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void updatePaymentDone(Payment payment) {
-        Payment curr = paymentRepository.getOne(payment.getPaymentId());
+        Long cartId = payment.getCartId();
+        Payment curr = paymentRepository.findByCartId(cartId);
         curr.setCompletedAt(payment.getCompletedAt());
         paymentRepository.save(curr);
     }

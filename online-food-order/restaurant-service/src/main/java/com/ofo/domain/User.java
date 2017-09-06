@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor(access= AccessLevel.PUBLIC)
 @NoArgsConstructor(access= AccessLevel.PUBLIC)
+@Table(name = "RESTAURANT_USER")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
