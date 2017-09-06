@@ -52,22 +52,22 @@ public class RestaurantRestController {
     }
 
     @RequestMapping(value="/addtocart/{dishId}/{quantity}", method=RequestMethod.POST)
-    public void addToCart(@PathVariable Long dishId, @PathVariable int quantity){
-        restaurantService.addToCart(dishId, quantity);
+    public Long addToCart(@PathVariable Long dishId, @PathVariable int quantity){
+        return restaurantService.addToCart(dishId, quantity);
     }
 
-    @RequestMapping(value="/remotefromcart/{dishId}", method=RequestMethod.POST)
-    public void remoteFromCart(@PathVariable Long dishId){
-        restaurantService.removeFromCart(dishId);
+    @RequestMapping(value="/removefromcart/{dishId}", method=RequestMethod.POST)
+    public Long remoteFromCart(@PathVariable Long dishId){
+        return restaurantService.removeFromCart(dishId);
     }
 
     @RequestMapping(value="/addnotetocart", method=RequestMethod.POST)
-    public void addNote(@RequestBody String note){
-        restaurantService.addNoteToCart(note);
+    public Long addNote(@RequestBody String note){
+        return restaurantService.addNoteToCart(note);
     }
 
     @RequestMapping(value="pay", method = RequestMethod.POST)
-    public void pay(@RequestBody CreditCard creditCard){
-        restaurantService.pay(creditCard);
+    public Long pay(@RequestBody CreditCard creditCard){
+        return restaurantService.pay(creditCard);
     }
 }

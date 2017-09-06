@@ -20,7 +20,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@Table(name = "ONLINE_ORDER")
+@Table(name = "CART")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,18 +62,23 @@ public class Cart {
 
 
     public float getTotal(Set<CartItem> cartItems) {
-        float total = 0.0f;
+        this.total = 0.0f;
         for (CartItem ci : cartItems) {
-            total += ci.getPrice() * ci.getQuantity();
+            this.total += ci.getPrice() * ci.getQuantity();
         }
-        return total;
+        return this.total;
     }
 
     public void updateCartItem(CartItem cartItem){
-        if (this.cartItems.contains(cartItem)) {
-            this.cartItems.remove(cartItem);
+        for (CartItem ci : cartItems){
+            if (ci.equals(cartItem)){
+                this.cartItems.remove(ci);
+            }
         }
-        this.cartItems.add(cartItem);
+
+        if (cartItem.getQuantity() > 0) {
+            this.cartItems.add(cartItem);
+        }
         this.updatedAt = new Date();
     }
 
@@ -83,7 +88,7 @@ public class Cart {
 
     public void remoteCartItemById(Long externalItemId) {
         for (CartItem ci : this.cartItems){
-            if (ci.getCartItemId() == externalItemId){
+            if (ci.getExternalItemId() == externalItemId){
                 this.cartItems.remove(ci);
                 break;
             }

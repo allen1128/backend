@@ -58,6 +58,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    public Restaurant findOne(Long restaurantId) {
+        return restaurantRepository.findOne(restaurantId);
+    }
+
+    @Override
     public Long addToCart(Long dishId, int quantity) {
         log.info("sending add request to shopping-cart-service");
         Dish dish = dishRepository.getOne(dishId);
@@ -71,14 +76,9 @@ public class RestaurantServiceImpl implements RestaurantService {
         return cartId;
     }
 
-
     @Override
     public Long removeFromCart(Long dishId) {
-        log.info("sending remove request to shopping-cart-service");
-        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
-        bodyMap.add("userName", "xl");
-        bodyMap.add("dishId", String.valueOf(dishId));
-        return restTemplate.postForObject(shoppingCartService + "/cart/remote", bodyMap, Long.class);
+        return addToCart(dishId, 0);
     }
 
     @Override
@@ -100,10 +100,5 @@ public class RestaurantServiceImpl implements RestaurantService {
         bodyMap.add("expirationDate", creditCard.getExpirationDate());
         bodyMap.add("securityCode", creditCard.getSecurityCode());
         return restTemplate.postForObject(shoppingCartService+"/cart/pay", creditCard, Long.class);
-    }
-
-    @Override
-    public Restaurant findOne(Long restaurantId) {
-        return restaurantRepository.findOne(restaurantId);
     }
 }

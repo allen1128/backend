@@ -44,12 +44,6 @@ public class CartRestController {
         return cart.getCartId();
     }
 
-    @RequestMapping(value="/remove", method=RequestMethod.POST)
-    public Long remove(String userName, Long externalItemId){
-        Cart cart = cartService.removeCartItemById(externalItemId, userName);
-        return cart.getCartId();
-    }
-
     @RequestMapping(value="/addnote", method=RequestMethod.POST)
     public Long addNote(String note, String userName){
         Cart cart = cartService.addNote(note, userName);
