@@ -15,8 +15,9 @@ public interface RestaurantService {
     void deleteByRestaurantId(Long restaurantId);
     List<Restaurant> findAll();
 
-    void addToCart(Long dishId, int quantity);
-    void removeFromCart(Long dishId);
-    void addNoteToCart(String note);
-    void pay(CreditCard creditCard);
+    Long addToCart(Long dishId, int quantity);
+    Long removeFromCart(Long dishId);
+    Long addNoteToCart(String note);
+    Long pay(CreditCard creditCard);
+    Restaurant findOne(Long restaurantId);
 }

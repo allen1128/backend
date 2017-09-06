@@ -13,9 +13,9 @@ import java.util.Set;
 public interface CartService {
     Cart update(Long cartId, Set<CartItem> cartItems);
     boolean isPaid(Long cartId);
-    void pay(CreditCard creditCard);
-    Cart creatOrUpdate(Set<CartItem> cartItems, String userName);
-    Cart remove(Long externalItemId, String userName);
+    void pay(CreditCard creditCard, String userName);
+    Cart creatOrUpdateCartItem(CartItem cartItem, String userName);
+    Cart removeCartItemById(Long externalItemId, String userName);
     Cart addNote(String note, String userName);
     void updatePaymentDone(Payment payment);
 }

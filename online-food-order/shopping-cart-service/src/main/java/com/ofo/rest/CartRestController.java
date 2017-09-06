@@ -33,21 +33,20 @@ public class CartRestController {
 
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public void pay(CreditCard creditCard ) {
-        cartService.pay(creditCard);
+    public void pay(String userName, CreditCard creditCard) {
+        cartService.pay(creditCard, userName);
     }
 
-    @RequestMapping(value="/add/", method=RequestMethod.POST)
+    @RequestMapping(value="/add", method=RequestMethod.POST)
     public Long add(String userName, Long externalItemId, float price, String name, int quantity){
-        Set<CartItem> cartItems = new HashSet<>();
-        cartItems.add(new CartItem(externalItemId, price, name, quantity));
-        Cart cart = cartService.creatOrUpdate(cartItems, userName);
+        CartItem ci = new CartItem(externalItemId, price, name, quantity);
+        Cart cart = cartService.creatOrUpdateCartItem(ci, userName);
         return cart.getCartId();
     }
 
-    @RequestMapping(value="/remove/", method=RequestMethod.POST)
+    @RequestMapping(value="/remove", method=RequestMethod.POST)
     public Long remove(String userName, Long externalItemId){
-        Cart cart = cartService.remove(externalItemId, userName);
+        Cart cart = cartService.removeCartItemById(externalItemId, userName);
         return cart.getCartId();
     }
 

@@ -1,6 +1,7 @@
 package com.ofo.service;
 
 import com.ofo.domain.Cart;
+import com.ofo.domain.Cart.CartType;
 import com.ofo.domain.CartItem;
 import com.ofo.domain.CreditCard;
 import com.ofo.domain.Payment;
@@ -48,9 +49,9 @@ public class CartServiceImpl implements CartService {
     public boolean isPaid(Long cartId) {
         boolean result = false;
         Cart cart = cartRepository.getOne(cartId);
-        if (cart != null){
+        if (cart != null) {
             Payment payment = paymentRepository.findByCartId(cart.getCartId());
-            if (payment.getCompletedAt() != null){
+            if (payment.getCompletedAt() != null) {
                 result = true;
             }
         }
@@ -58,47 +59,44 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void pay(CreditCard creditCard) {
-        Cart cart = cartRepository.findByOrderBy(creditCard.getUserName());
+    public void pay(CreditCard creditCard, String userName) {
+        Cart cart = cartRepository.findByOrderBy(userName);
         Payment payment = paymentRepository.findByCartId(cart.getCartId());
 
-        if (payment == null){
+        if (payment == null) {
             payment = new Payment(creditCard, cart.getCartId(), cart.getTotal());
             paymentRepository.save(payment);
+            this.output.send(MessageBuilder.withPayload(payment).build());
         }
-        this.output.send(MessageBuilder.withPayload(payment).build());
     }
 
     @Override
-    public Cart creatOrUpdate(Set<CartItem> cartItems, String userName) {
+    public Cart creatOrUpdateCartItem(CartItem cartItem, String userName) {
         Cart cart = cartRepository.findByOrderBy(userName);
 
-        if (cart != null) {
-            for (CartItem ci : cartItems){
-                if (cart.getCartItems().contains(ci)){
-                    cart.getCartItems().remove(ci);
-                }
-                cart.getCartItems().add(ci);
-            }
-            cartRepository.save(cart);
+        if (cart == null) {
+            cart = new Cart(userName);
         }
+
+        cart.updateCartItem(cartItem);
+        cartRepository.save(cart);
         return cart;
     }
 
     @Override
-    public Cart remove(Long externalItemId, String userName) {
+    public Cart removeCartItemById(Long externalItemId, String userName) {
         Cart cart = cartRepository.findByOrderBy(userName);
         if (cart != null){
-            CartItem ci = new CartItem(externalItemId);
-            cart.getCartItems().remove(ci);
+            cart.remoteCartItemById(externalItemId);
         }
+
         return cart;
     }
 
     @Override
     public Cart addNote(String note, String userName) {
         Cart cart = cartRepository.findByOrderBy(userName);
-        if (cart != null){
+        if (cart != null) {
             cart.setNote(note);
             cartRepository.save(cart);
         }

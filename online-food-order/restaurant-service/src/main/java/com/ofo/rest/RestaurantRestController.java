@@ -46,6 +46,11 @@ public class RestaurantRestController {
         restaurantService.deleteByRestaurantId(restaurantId);
     }
 
+    @RequestMapping(value="/{restaurantId}", method=RequestMethod.GET)
+    public Restaurant findOne(@PathVariable Long restaurantId){
+        return restaurantService.findOne(restaurantId);
+    }
+
     @RequestMapping(value="/addtocart/{dishId}/{quantity}", method=RequestMethod.POST)
     public void addToCart(@PathVariable Long dishId, @PathVariable int quantity){
         restaurantService.addToCart(dishId, quantity);
@@ -64,40 +69,5 @@ public class RestaurantRestController {
     @RequestMapping(value="pay", method = RequestMethod.POST)
     public void pay(@RequestBody CreditCard creditCard){
         restaurantService.pay(creditCard);
-    }
-
-    @RequestMapping(value="/testcreate", method=RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void testCreate(){
-        Restaurant res = new Restaurant();
-        res.setName("I Love You");
-        res.setDescription("description");
-        res.setCuisineType(Restaurant.CuisineType.Chinese);
-        res.setEmail("contactus@iloveyou.com");
-        res.setAvgPrice(31.3f);
-        res.setRating(0.75f);
-        res.setDeliveryEnabled(true);
-        res.setParkingEnabled(true);
-        Address adr = new Address("7-602", "HuaMu", "Shanghai", "Shanghai", "China", "201203");
-        res.setAddress(adr);
-
-        Dish dish1 = new Dish();
-        dish1.setDescription("chicken, vinegar, salt, SMG");
-        dish1.setName("hot and sour chicken");
-        dish1.setPrice(6.5f);
-
-        Dish dish2 = new Dish();
-        dish2.setDescription("pineapple, sugar, chicken");
-        dish2.setName("pineapple chicken");
-        dish2.setPrice(7.5f);
-
-        List<Dish> dishes = new ArrayList<Dish>();
-        dishes.add(dish1);
-        dishes.add(dish2);
-        res.setMenu(dishes);
-
-        List<Restaurant> reses = new ArrayList<Restaurant>();
-        reses.add(res);
-        restaurantService.saveRestaurantInfo(reses);
     }
 }

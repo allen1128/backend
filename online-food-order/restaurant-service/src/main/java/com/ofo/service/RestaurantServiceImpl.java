@@ -58,56 +58,52 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void addToCart(Long dishId, int quantity) {
+    public Long addToCart(Long dishId, int quantity) {
         log.info("sending add request to shopping-cart-service");
-
         Dish dish = dishRepository.getOne(dishId);
-        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
+        MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<String, Object>();
         bodyMap.add("userName", "xl");
-        bodyMap.add("dishId", String.valueOf(dishId));
-        bodyMap.add("dishPrice", String.valueOf(dish.getPrice()));
-        bodyMap.add("quantity", String.valueOf(quantity));
+        bodyMap.add("externalItemId", dishId);
+        bodyMap.add("price", dish.getPrice());
+        bodyMap.add("name", dish.getName());
+        bodyMap.add("quantity", quantity);
         Long cartId = restTemplate.postForObject(shoppingCartService + "/cart/add", bodyMap, Long.class);
+        return cartId;
     }
 
 
     @Override
-    public void removeFromCart(Long dishId) {
+    public Long removeFromCart(Long dishId) {
         log.info("sending remove request to shopping-cart-service");
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
         bodyMap.add("userName", "xl");
         bodyMap.add("dishId", String.valueOf(dishId));
-        Long cartId = restTemplate.postForObject(shoppingCartService + "/cart/remote", bodyMap, Long.class);
+        return restTemplate.postForObject(shoppingCartService + "/cart/remote", bodyMap, Long.class);
     }
 
     @Override
-    public void addNoteToCart(String note) {
+    public Long addNoteToCart(String note) {
         log.info("sending add note request to shopping-cart-service");
         //MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<>();
         bodyMap.add("userName", "xl");
         bodyMap.add("note", note);
-
-        //bodyMap.add("userName", "xl");
-        Long cartId = restTemplate.postForObject(shoppingCartService + "/cart/addnote", bodyMap, Long.class);
-        log.info("response from shopping cart service " + cartId);
-
+        return restTemplate.postForObject(shoppingCartService + "/cart/addnote", bodyMap, Long.class);
     }
-//    @Override
-//    public void pay(CreditCard creditCard) {
-//        log.info("sending pay request to shopping-cart-service");
-//        String str = restTemplate.getForObject(shoppingCartService+"/cart/pay", String.class);
-//        log.info("getting the pay resut from the shopping-cart-service:" + str);
-//    }
 
     @Override
-    public void pay(CreditCard creditCard) {
+    public Long pay(CreditCard creditCard) {
         log.info("sending pay request to shopping-cart-service");
         MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
         bodyMap.add("userName", "xl");
         bodyMap.add("cardNumber", creditCard.getCardNumber());
         bodyMap.add("expirationDate", creditCard.getExpirationDate());
         bodyMap.add("securityCode", creditCard.getSecurityCode());
-        restTemplate.postForObject(shoppingCartService+"/cart/pay", creditCard, String.class);
+        return restTemplate.postForObject(shoppingCartService+"/cart/pay", creditCard, Long.class);
+    }
+
+    @Override
+    public Restaurant findOne(Long restaurantId) {
+        return restaurantRepository.findOne(restaurantId);
     }
 }

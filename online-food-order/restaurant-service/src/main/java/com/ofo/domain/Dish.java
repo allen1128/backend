@@ -1,5 +1,6 @@
 package com.ofo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -26,8 +27,8 @@ public class Dish {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="RESTAURANT_ID", nullable = false, referencedColumnName = "RESTAURANT_ID")
+    @JsonIgnore
     private Restaurant restaurant;
-
 
     public Dish(Long dishId) {
         this.dishId = dishId;
