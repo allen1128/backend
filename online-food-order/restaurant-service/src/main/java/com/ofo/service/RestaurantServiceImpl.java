@@ -2,6 +2,7 @@ package com.ofo.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.ofo.domain.CreditCard;
 import com.ofo.domain.Dish;
 import com.ofo.domain.Restaurant;
@@ -67,6 +68,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @HystrixCommand(fallbackMethod = "addToCartFallback")
     public Long addToCart(Long dishId, int quantity) {
         log.info("sending add request to shopping-cart-service");
         Dish dish = dishRepository.getOne(dishId);
@@ -80,12 +82,18 @@ public class RestaurantServiceImpl implements RestaurantService {
         return cartId;
     }
 
+    public Long addToCartFallback(Long dishId, int quantity) {
+        log.error("fallback add to cart is used");
+        return -1l;
+    }
+
     @Override
     public Long removeFromCart(Long dishId) {
         return addToCart(dishId, 0);
     }
 
     @Override
+    @HystrixCommand(fallbackMethod = "addNoteToCartFallback")
     public Long addNoteToCart(String note) {
         log.info("sending add note request to shopping-cart-service");
         //MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
@@ -95,7 +103,13 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restTemplate.postForObject(shoppingCartService + "/cart/addnote", bodyMap, Long.class);
     }
 
+    public Long addNoteToCartFallback(String note){
+        log.error("fallback add note to cart is used");
+        return -1l;
+    }
+
     @Override
+    @HystrixCommand(fallbackMethod = "payFallback")
     public boolean pay(Long cartId, CreditCard creditCard) {
         boolean result = false;
         log.info("sending pay request to shopping-cart-service");
@@ -110,5 +124,10 @@ public class RestaurantServiceImpl implements RestaurantService {
         } finally{
             return result;
         }
+    }
+
+    public boolean payFallback(String note){
+        log.error("fallback pay is used");
+        return false;
     }
 }
