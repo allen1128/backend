@@ -23,17 +23,21 @@ import java.util.List;
 @Service
 @Slf4j
 public class RestaurantServiceImpl implements RestaurantService {
-    @Autowired
-    RestaurantRepository restaurantRepository;
+    private RestaurantRepository restaurantRepository;
+
+    private DishRepository dishRepository;
+
+    private ObjectMapper objectMapper;
+
+    private RestTemplate restTemplate;
 
     @Autowired
-    DishRepository dishRepository;
-
-    @Autowired
-    ObjectMapper objectMapper;
-
-    @Autowired
-    RestTemplate restTemplate;
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, DishRepository dishRepository, ObjectMapper objectMapper, RestTemplate restTemplate) {
+        this.restaurantRepository = restaurantRepository;
+        this.dishRepository = dishRepository;
+        this.objectMapper = objectMapper;
+        this.restTemplate = restTemplate;
+    }
 
     String shoppingCartService = "http://shopping-cart-service";
 
