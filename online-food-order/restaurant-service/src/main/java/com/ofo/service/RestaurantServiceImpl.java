@@ -3,6 +3,7 @@ package com.ofo.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.ofo.domain.Address;
 import com.ofo.domain.CreditCard;
 import com.ofo.domain.Dish;
 import com.ofo.domain.Restaurant;
@@ -65,6 +66,23 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Restaurant findOne(Long restaurantId) {
         return restaurantRepository.findOne(restaurantId);
+    }
+
+    @Override
+    public Long addAddress(Address address) {
+        log.info("sending add address request to shopping-cart-service");
+        Long cartId = -1l;
+        try {
+            String addressStr = objectMapper.writeValueAsString(address);
+            MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<String, Object>();
+            bodyMap.add("userName", "xl");
+            bodyMap.add("address", addressStr);
+            cartId = restTemplate.postForObject(shoppingCartService + "/cart/address", bodyMap, Long.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return cartId;
     }
 
     @Override

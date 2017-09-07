@@ -33,6 +33,9 @@ public class Cart {
     private String orderBy;
     private String note;
 
+    @Embedded
+    private Address address;
+
     @Enumerated(EnumType.STRING)
     private CartType cartType;
 

@@ -1,5 +1,6 @@
 package com.ofo.service;
 
+import com.ofo.domain.Address;
 import com.ofo.domain.CreditCard;
 import com.ofo.domain.Restaurant;
 
@@ -19,4 +20,5 @@ public interface RestaurantService {
     Long addNoteToCart(String note);
     boolean pay(Long cartId, CreditCard creditCard);
     Restaurant findOne(Long restaurantId);
+    Long addAddress(Address address);
 }

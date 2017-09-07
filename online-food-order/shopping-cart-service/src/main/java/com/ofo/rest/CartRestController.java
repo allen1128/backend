@@ -1,6 +1,7 @@
 package com.ofo.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ofo.domain.Address;
 import com.ofo.domain.Cart;
 import com.ofo.domain.CartItem;
 import com.ofo.domain.CreditCard;
@@ -55,6 +56,20 @@ public class CartRestController {
     public Long addNote(String note, String userName){
         Cart cart = cartService.addNote(note, userName);
         return cart.getCartId();
+    }
+
+    @RequestMapping(value ="/addaddress",method = RequestMethod.POST)
+    public Long addAddress(String addressStr, String userName){
+        Long result = -1l;
+        try {
+            Address address = this.objectMapper.readValue(addressStr, Address.class);
+            Cart cart = cartService.addAddress(address, userName);
+            result = cart.getCartId();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
 }

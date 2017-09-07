@@ -1,10 +1,7 @@
 package com.ofo.service;
 
-import com.ofo.domain.Cart;
+import com.ofo.domain.*;
 import com.ofo.domain.Cart.CartType;
-import com.ofo.domain.CartItem;
-import com.ofo.domain.CreditCard;
-import com.ofo.domain.Payment;
 import com.ofo.repository.CartRepository;
 import com.ofo.repository.PaymentRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -117,5 +114,15 @@ public class CartServiceImpl implements CartService {
         Payment curr = paymentRepository.findByCartId(cartId);
         curr.setCompletedAt(payment.getCompletedAt());
         paymentRepository.save(curr);
+    }
+
+    @Override
+    public Cart addAddress(Address address, String userName) {
+        Cart cart = cartRepository.findByOrderBy(userName);
+        if (cart != null) {
+            cart.setAddress(address);
+            cartRepository.save(cart);
+        }
+        return cart;
     }
 }

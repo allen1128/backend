@@ -1,5 +1,6 @@
 package com.ofo.rest;
 
+import com.ofo.domain.Address;
 import com.ofo.domain.CreditCard;
 import com.ofo.domain.Restaurant;
 import com.ofo.service.RestaurantService;
@@ -63,6 +64,11 @@ public class RestaurantRestController {
     @RequestMapping(value = "/addnotetocart", method = RequestMethod.POST)
     public Long addNote(@RequestBody String note) {
         return restaurantService.addNoteToCart(note);
+    }
+
+    @RequestMapping(value = "/deliveryaddress", method = RequestMethod.POST)
+    public Long addDeliveryAddress(@RequestBody Address address) {
+        return restaurantService.addAddress(address);
     }
 
     @RequestMapping(value = "pay/{cartId}", method = RequestMethod.POST)
