@@ -3,10 +3,7 @@ package com.ofo.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.ofo.domain.Address;
-import com.ofo.domain.CreditCard;
-import com.ofo.domain.Dish;
-import com.ofo.domain.Restaurant;
+import com.ofo.domain.*;
 import com.ofo.repository.DishRepository;
 import com.ofo.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -133,25 +131,19 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    @HystrixCommand(fallbackMethod = "payFallback")
-    public boolean pay(Long cartId, CreditCard creditCard) {
-        boolean result = false;
+    public Receipt pay(Long cartId, CreditCard creditCard) {
+        Receipt receipt = new Receipt();
         log.info("sending pay request to shopping-cart-service");
         MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<String, Object>();
         try {
             String creditCardStr = objectMapper.writeValueAsString(creditCard);
             bodyMap.add("creditCardStr", creditCardStr);
             bodyMap.add("cartId", cartId);
-            result = restTemplate.postForObject(shoppingCartService + "/cart/pay", bodyMap, Boolean.class);
+            receipt = restTemplate.postForObject(shoppingCartService + "/cart/pay", bodyMap, Receipt.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-        } finally {
-            return result;
         }
-    }
 
-    public boolean payFallback(String note) {
-        log.error("fallback pay is used");
-        return false;
+        return receipt;
     }
 }

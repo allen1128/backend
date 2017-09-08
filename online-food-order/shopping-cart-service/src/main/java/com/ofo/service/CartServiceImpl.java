@@ -13,6 +13,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -56,22 +57,22 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Payment pay(Long cartId, CreditCard creditCard) {
+    public void pay(Long cartId, CreditCard creditCard) {
         Cart cart = cartRepository.findOne(cartId);
         Payment payment = paymentRepository.findByCartId(cartId);
 
-        if (payment == null || payment.getCompletedAt() == null){
-            if (payment == null) {
-                payment = new Payment(creditCard, cart.getCartId(), cart.getTotal());
-                paymentRepository.save(payment);
-            } else {
-                payment.setCreditCard(creditCard);
-            }
-
-            this.output.send(MessageBuilder.withPayload(payment).build());
+        if (payment != null && payment.getCompletedAt() != null){
+            return;
         }
 
-        return payment;
+        if (payment == null) {
+            payment = new Payment(creditCard, cart.getCartId(), cart.getTotal());
+            paymentRepository.save(payment);
+        } else {
+            payment.setCreditCard(creditCard);
+        }
+
+        this.output.send(MessageBuilder.withPayload(payment).build());
     }
 
     @Override
@@ -124,5 +125,21 @@ public class CartServiceImpl implements CartService {
             cartRepository.save(cart);
         }
         return cart;
+    }
+
+    @Override
+    public Receipt buildReceipt(Long cartId){
+        Receipt receipt = new Receipt();
+        Payment payment = paymentRepository.findByCartId(cartId);
+        receipt.setPaymentId(payment.getPaymentId());
+
+
+        if (payment != null && payment.getCompletedAt() != null){
+            Cart cart = cartRepository.findOne(payment.getCartId());
+            receipt.setExpectedDeliveryTime(cart.getDeliveryTimeNeededInMinutes());
+            receipt.setOrderAt(payment.getCompletedAt());
+        }
+
+        return receipt;
     }
 }

@@ -10,10 +10,11 @@ import java.util.Set;
 public interface CartService {
     Cart update(Long cartId, Set<CartItem> cartItems);
     boolean isPaid(Long cartId);
-    Payment pay(Long cartId, CreditCard creditCard);
+    void pay(Long cartId, CreditCard creditCard);
     Cart creatOrUpdateCartItem(Long cartId, CartItem cartItem, String userName);
     Cart removeCartItemById(Long cartId, Long externalItemId);
     Cart addNote(Long cartId, String note);
     void updatePaymentDone(Payment payment);
     Cart addAddress(Long cartId, Address address);
+    Receipt buildReceipt(Long cartId);
 }

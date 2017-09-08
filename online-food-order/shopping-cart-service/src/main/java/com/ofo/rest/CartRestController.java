@@ -1,10 +1,7 @@
 package com.ofo.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ofo.domain.Address;
-import com.ofo.domain.Cart;
-import com.ofo.domain.CartItem;
-import com.ofo.domain.CreditCard;
+import com.ofo.domain.*;
 import com.ofo.service.CartService;
 import jdk.nashorn.internal.parser.JSONParser;
 import lombok.extern.slf4j.Slf4j;
@@ -32,17 +29,19 @@ public class CartRestController {
     ObjectMapper objectMapper;
 
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
-    public boolean pay(Long cartId, String creditCardStr) {
-        boolean result = false;
+    public Receipt pay(Long cartId, String creditCardStr) {
+        if (cartId == null || creditCardStr == null){
+            return null;
+        }
 
         try {
             CreditCard creditCard = this.objectMapper.readValue(creditCardStr, CreditCard.class);
-            result = cartService.pay(cartId, creditCard);
+            cartService.pay(cartId, creditCard);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            return result;
         }
+
+        return cartService.buildReceipt(cartId);
     }
 
     @RequestMapping(value="/add", method=RequestMethod.POST)

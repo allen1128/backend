@@ -2,6 +2,7 @@ package com.ofo.rest;
 
 import com.ofo.domain.Address;
 import com.ofo.domain.CreditCard;
+import com.ofo.domain.Receipt;
 import com.ofo.domain.Restaurant;
 import com.ofo.service.RestaurantService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -72,7 +74,7 @@ public class RestaurantRestController {
     }
 
     @RequestMapping(value = "pay/{cartId}", method = RequestMethod.POST)
-    public boolean pay(@PathVariable Long cartId, @RequestBody CreditCard creditCard) {
+    public Receipt pay(@PathVariable Long cartId, @RequestBody CreditCard creditCard) {
         return restaurantService.pay(cartId, creditCard);
     }
 

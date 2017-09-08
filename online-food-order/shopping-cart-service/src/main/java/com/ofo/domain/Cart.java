@@ -34,7 +34,7 @@ public class Cart {
     private String orderBy;
     private String note;
 
-    private int deliveryTimeNeededInMinutes;
+    private int deliveryTimeNeededInMinutes = new Random().nextInt(56) + 5;
 
     @Embedded
     private Address address;
@@ -66,13 +66,6 @@ public class Cart {
         this.orderBy = orderBy;
         this.cartType = cartType;
     }
-
-    public void setAddress(Address address) {
-        this.address = address;
-        Random r = new Random();
-        this.deliveryTimeNeededInMinutes = r.nextInt(56) + 5;;
-    }
-
 
     public float getTotal(Set<CartItem> cartItems) {
         this.total = 0.0f;

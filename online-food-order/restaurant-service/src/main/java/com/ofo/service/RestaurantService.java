@@ -2,8 +2,10 @@ package com.ofo.service;
 
 import com.ofo.domain.Address;
 import com.ofo.domain.CreditCard;
+import com.ofo.domain.Receipt;
 import com.ofo.domain.Restaurant;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,7 +20,7 @@ public interface RestaurantService {
     Long addToCart(Long cartId, Long dishId, int quantity);
     Long removeFromCart(Long cardId, Long dishId);
     Long addNoteToCart(Long cartId, String note);
-    boolean pay(Long cartId, CreditCard creditCard);
+    Receipt pay(Long cartId, CreditCard creditCard);
     Restaurant findOne(Long restaurantId);
     Long addAddress(Long cartId, Address address);
 }

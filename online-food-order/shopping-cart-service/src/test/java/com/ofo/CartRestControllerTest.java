@@ -32,12 +32,11 @@ public class CartRestControllerTest {
     @Before
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-        this.creditCardStr = "{\"cardNumber\":\"1001\", \"expirationDate\": \"1001\", \"securityCode\":\"200\"}";
     }
 
     @Test
     public void testPayWithEmptyCartIdAndCreditCard() throws Exception {
         this.mockMvc.perform(post("/cart/pay").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-                .andExpect(content().string("false"));
+                .andReturn();
     }
 }

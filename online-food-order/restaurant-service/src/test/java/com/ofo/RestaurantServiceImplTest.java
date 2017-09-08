@@ -3,6 +3,7 @@ package com.ofo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ofo.domain.CreditCard;
+import com.ofo.domain.Receipt;
 import com.ofo.repository.DishRepository;
 import com.ofo.repository.RestaurantRepository;
 import com.ofo.service.RestaurantService;
@@ -17,6 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -39,8 +43,9 @@ public class RestaurantServiceImplTest {
     @Test
     public void testPayServiceWithCorrectCartIdAndCreditCard() throws JsonProcessingException {
         CreditCard creditCard = new CreditCard("1", "1", "1");
-        doReturn(true).when(restTemplate)
+        Receipt receipt = new Receipt();
+        doReturn(receipt).when(restTemplate)
                 .postForObject(any(String.class), any(MultiValueMap.class), Matchers.<Class<Boolean>>any());
-        assertTrue(restaurantService.pay(2l, creditCard));
+        assertEquals(restaurantService.pay(2l, creditCard), receipt);
     }
 }
