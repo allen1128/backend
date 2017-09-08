@@ -51,24 +51,24 @@ public class RestaurantRestController {
         return restaurantService.findOne(restaurantId);
     }
 
-    @RequestMapping(value = "/addtocart/{dishId}/{quantity}", method = RequestMethod.POST)
-    public Long addToCart(@PathVariable Long dishId, @PathVariable int quantity) {
-        return restaurantService.addToCart(dishId, quantity);
+    @RequestMapping(value = "/addtocart/{cartId}/{dishId}/{quantity}", method = RequestMethod.POST)
+    public Long addToCart(@PathVariable Long cartId, @PathVariable Long dishId, @PathVariable int quantity) {
+        return restaurantService.addToCart(cartId, dishId, quantity);
     }
 
-    @RequestMapping(value = "/removefromcart/{dishId}", method = RequestMethod.POST)
-    public Long remoteFromCart(@PathVariable Long dishId) {
-        return restaurantService.removeFromCart(dishId);
+    @RequestMapping(value = "/removefromcart/{cartId}/{dishId}", method = RequestMethod.POST)
+    public Long remoteFromCart(@PathVariable Long cartId, @PathVariable Long dishId) {
+        return restaurantService.removeFromCart(cartId, dishId);
     }
 
-    @RequestMapping(value = "/addnotetocart", method = RequestMethod.POST)
-    public Long addNote(@RequestBody String note) {
-        return restaurantService.addNoteToCart(note);
+    @RequestMapping(value = "/addnotetocart/{cartId}", method = RequestMethod.POST)
+    public Long addNote(@PathVariable Long cartId, @RequestBody String note) {
+        return restaurantService.addNoteToCart(cartId, note);
     }
 
-    @RequestMapping(value = "/deliveryaddress", method = RequestMethod.POST)
-    public Long addDeliveryAddress(@RequestBody Address address) {
-        return restaurantService.addAddress(address);
+    @RequestMapping(value = "/deliveryaddress/{cartId}", method = RequestMethod.POST)
+    public Long addDeliveryAddress(@PathVariable Long cartId, @RequestBody Address address) {
+        return restaurantService.addAddress(cartId, address);
     }
 
     @RequestMapping(value = "pay/{cartId}", method = RequestMethod.POST)

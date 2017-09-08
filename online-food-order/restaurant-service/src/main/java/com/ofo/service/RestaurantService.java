@@ -15,10 +15,10 @@ public interface RestaurantService {
     void deleteByRestaurantId(Long restaurantId);
     List<Restaurant> findAll();
 
-    Long addToCart(Long dishId, int quantity);
-    Long removeFromCart(Long dishId);
-    Long addNoteToCart(String note);
+    Long addToCart(Long cartId, Long dishId, int quantity);
+    Long removeFromCart(Long cardId, Long dishId);
+    Long addNoteToCart(Long cartId, String note);
     boolean pay(Long cartId, CreditCard creditCard);
     Restaurant findOne(Long restaurantId);
-    Long addAddress(Address address);
+    Long addAddress(Long cartId, Address address);
 }

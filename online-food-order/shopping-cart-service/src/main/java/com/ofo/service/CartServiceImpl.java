@@ -56,29 +56,27 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public boolean pay(Long cartId, CreditCard creditCard) {
+    public Payment pay(Long cartId, CreditCard creditCard) {
         Cart cart = cartRepository.findOne(cartId);
         Payment payment = paymentRepository.findByCartId(cartId);
 
-        if (payment != null && payment.getCompletedAt() != null){
-            return true; //paid
+        if (payment == null || payment.getCompletedAt() == null){
+            if (payment == null) {
+                payment = new Payment(creditCard, cart.getCartId(), cart.getTotal());
+                paymentRepository.save(payment);
+            } else {
+                payment.setCreditCard(creditCard);
+            }
+
+            this.output.send(MessageBuilder.withPayload(payment).build());
         }
 
-        if (payment == null) {
-            payment = new Payment(creditCard, cart.getCartId(), cart.getTotal());
-            paymentRepository.save(payment);
-        } else {
-            payment.setCreditCard(creditCard);
-        }
-
-        this.output.send(MessageBuilder.withPayload(payment).build());
-        return false;
+        return payment;
     }
 
     @Override
-    public Cart creatOrUpdateCartItem(CartItem cartItem, String userName) {
-        Cart cart = cartRepository.findByOrderBy(userName);
-
+    public Cart creatOrUpdateCartItem(Long cartId, CartItem cartItem, String userName) {
+        Cart cart = cartRepository.findOne(cartId);
         if (cart == null) {
             cart = new Cart(userName, CartType.FOOD);
         }
@@ -89,8 +87,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart removeCartItemById(Long externalItemId, String userName) {
-        Cart cart = cartRepository.findByOrderBy(userName);
+    public Cart removeCartItemById(Long cartId, Long externalItemId) {
+        Cart cart = cartRepository.findOne(cartId);
         if (cart != null){
             cart.remoteCartItemById(externalItemId);
         }
@@ -99,8 +97,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart addNote(String note, String userName) {
-        Cart cart = cartRepository.findByOrderBy(userName);
+    public Cart addNote(Long cartId, String note) {
+        Cart cart = cartRepository.findOne(cartId);
+
         if (cart != null) {
             cart.setNote(note);
             cartRepository.save(cart);
@@ -117,8 +116,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart addAddress(Address address, String userName) {
-        Cart cart = cartRepository.findByOrderBy(userName);
+    public Cart addAddress(Long cartId, Address address) {
+        Cart cart = cartRepository.findOne(cartId);
+
         if (cart != null) {
             cart.setAddress(address);
             cartRepository.save(cart);

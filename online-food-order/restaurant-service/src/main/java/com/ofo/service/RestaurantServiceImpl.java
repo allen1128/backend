@@ -9,7 +9,6 @@ import com.ofo.domain.Dish;
 import com.ofo.domain.Restaurant;
 import com.ofo.repository.DishRepository;
 import com.ofo.repository.RestaurantRepository;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,15 +68,15 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Long addAddress(Address address) {
+    public Long addAddress(Long cartId, Address address) {
         log.info("sending add address request to shopping-cart-service");
-        Long cartId = -1l;
+
         try {
             String addressStr = objectMapper.writeValueAsString(address);
             MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<String, Object>();
-            bodyMap.add("userName", "xl");
-            bodyMap.add("address", addressStr);
-            cartId = restTemplate.postForObject(shoppingCartService + "/cart/address", bodyMap, Long.class);
+            bodyMap.add("cartId", cartId);
+            bodyMap.add("addressStr", addressStr);
+            cartId = restTemplate.postForObject(shoppingCartService + "/cart/addaddress", bodyMap, Long.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -86,42 +85,49 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    @HystrixCommand(fallbackMethod = "addToCartFallback")
-    public Long addToCart(Long dishId, int quantity) {
+    //@HystrixCommand(fallbackMethod = "addToCartFallback")
+    public Long addToCart(Long cartId, Long dishId, int quantity) {
         log.info("sending add request to shopping-cart-service");
         Dish dish = dishRepository.getOne(dishId);
+
         MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<String, Object>();
+        bodyMap.add("cartId", cartId);
         bodyMap.add("userName", "xl");
         bodyMap.add("externalItemId", dishId);
         bodyMap.add("price", dish.getPrice());
         bodyMap.add("name", dish.getName());
         bodyMap.add("quantity", quantity);
-        Long cartId = restTemplate.postForObject(shoppingCartService + "/cart/add", bodyMap, Long.class);
-        return cartId;
+        return restTemplate.postForObject(shoppingCartService + "/cart/add", bodyMap, Long.class);
     }
 
-    public Long addToCartFallback(Long dishId, int quantity) {
+    public Long addToCartFallback(Long cartId, Long dishId, int quantity) {
         log.error("fallback add to cart is used");
         return -1l;
     }
 
     @Override
-    public Long removeFromCart(Long dishId) {
-        return addToCart(dishId, 0);
+    @HystrixCommand(fallbackMethod = "removeFromCartFallback")
+    public Long removeFromCart(Long cardId, Long dishId) {
+        return addToCart(cardId, dishId, 0);
+    }
+
+    public Long removeFromCartFallback(Long cartId, Long dishId){
+        log.error("fallback remove from cart is used");
+        return -1l;
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "addNoteToCartFallback")
-    public Long addNoteToCart(String note) {
+    public Long addNoteToCart(Long cartId, String note) {
         log.info("sending add note request to shopping-cart-service");
         //MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<String, String>();
-        MultiValueMap<String, String> bodyMap = new LinkedMultiValueMap<>();
-        bodyMap.add("userName", "xl");
+        MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
+        bodyMap.add("cartId",cartId);
         bodyMap.add("note", note);
         return restTemplate.postForObject(shoppingCartService + "/cart/addnote", bodyMap, Long.class);
     }
 
-    public Long addNoteToCartFallback(String note){
+    public Long addNoteToCartFallback(Long cartId, String note) {
         log.error("fallback add note to cart is used");
         return -1l;
     }
@@ -136,15 +142,15 @@ public class RestaurantServiceImpl implements RestaurantService {
             String creditCardStr = objectMapper.writeValueAsString(creditCard);
             bodyMap.add("creditCardStr", creditCardStr);
             bodyMap.add("cartId", cartId);
-            result = restTemplate.postForObject(shoppingCartService+"/cart/pay", bodyMap, Boolean.class);
+            result = restTemplate.postForObject(shoppingCartService + "/cart/pay", bodyMap, Boolean.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-        } finally{
+        } finally {
             return result;
         }
     }
 
-    public boolean payFallback(String note){
+    public boolean payFallback(String note) {
         log.error("fallback pay is used");
         return false;
     }

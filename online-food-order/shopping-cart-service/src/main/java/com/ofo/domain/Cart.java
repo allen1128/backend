@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -32,6 +33,8 @@ public class Cart {
 
     private String orderBy;
     private String note;
+
+    private int deliveryTimeNeededInMinutes;
 
     @Embedded
     private Address address;
@@ -63,6 +66,13 @@ public class Cart {
         this.orderBy = orderBy;
         this.cartType = cartType;
     }
+
+    public void setAddress(Address address) {
+        this.address = address;
+        Random r = new Random();
+        this.deliveryTimeNeededInMinutes = r.nextInt(56) + 5;;
+    }
+
 
     public float getTotal(Set<CartItem> cartItems) {
         this.total = 0.0f;
@@ -97,4 +107,6 @@ public class Cart {
             }
         }
     }
+
+
 }

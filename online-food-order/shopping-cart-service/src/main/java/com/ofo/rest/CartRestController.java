@@ -46,24 +46,37 @@ public class CartRestController {
     }
 
     @RequestMapping(value="/add", method=RequestMethod.POST)
-    public Long add(String userName, Long externalItemId, float price, String name, int quantity){
+    public Long add(Long cartId, String userName, Long externalItemId, float price, String name, int quantity){
+        Long result = -1l;
+
         CartItem ci = new CartItem(externalItemId, price, name, quantity);
-        Cart cart = cartService.creatOrUpdateCartItem(ci, userName);
-        return cart.getCartId();
+        Cart cart = cartService.creatOrUpdateCartItem(cartId, ci, userName);
+        if (cart != null) {
+            result = cart.getCartId();
+        }
+
+        return result;
     }
 
     @RequestMapping(value="/addnote", method=RequestMethod.POST)
-    public Long addNote(String note, String userName){
-        Cart cart = cartService.addNote(note, userName);
-        return cart.getCartId();
+    public Long addNote(Long cartId, String note){
+        Long result = -1l;
+
+        Cart cart = cartService.addNote(cartId, note);
+        if (cart != null) {
+            result = cart.getCartId();
+        }
+
+        return result;
     }
 
     @RequestMapping(value ="/addaddress",method = RequestMethod.POST)
-    public Long addAddress(String addressStr, String userName){
+    public Long addAddress(Long cartId, String addressStr){
         Long result = -1l;
+
         try {
             Address address = this.objectMapper.readValue(addressStr, Address.class);
-            Cart cart = cartService.addAddress(address, userName);
+            Cart cart = cartService.addAddress(cartId, address);
             result = cart.getCartId();
         } catch (IOException e) {
             e.printStackTrace();
