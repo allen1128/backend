@@ -1,35 +1,32 @@
-CRUD on restaurants resources
-/restaurants/ GET,POST,DELETE
+Search by restaurant name
+restaurant/search/{restaurantName} POST
 
-SEARCH by restaurant name
-/restaurants/search/?query={query string}&fields=name GET
+Create restaurants
+restaurant/ POST
 
-GET restaurant info by ID
-/restaurants/{restaurantid} GET
+Get all restaurants
+restaurant/ GET
 
-CRUD on dish resources
-/restaurants/{restaurantid}/dishes/ GET, POST, DELETE
+Delete by restaurant ID
+restaurant/{restaurantId} DELETE
 
-CRUD on orders resources
-/restaurants/{restaurantid}/orders/ GET, POST, DELETE
+Get by restaurant ID
+restaurant/{restaurantId} GET
 
-CRUD dishes to/from order
-/restaurants/{restaurantid}/orders/{orderid}/dishes/{dishid} GET, POST, DELETE
+Create a new shopping cart and add item to it.
+restaurant/addtocart/{cartId}/{dishId}/{quantity} POST
 
-Pay for order
-/checkout/{orderid}/ POST
-body
-{
-	amount: double
-}
+Remove from cart by cart ID and dish ID
+restaurant/removefromcart/{cartId}/{dishId} POST
 
+Add note to cart by cart ID
+restaurant/addnotetocart/{cartId} POST
 
+Add delivery address by cart ID
+restaurant/adddeliveryaddresstocart/{cartId} POST
 
+Pay
+restaurant/pay/{cartId} POST
 
-
-
-
-
-
-
-
+Mock user login process
+restaurant/username/{userName} POST
