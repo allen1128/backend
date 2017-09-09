@@ -36,7 +36,7 @@ Make sure Java >= 8, [Maven](http://maven.apache.org/) >= 3.0, Mysql >=5.7.18, D
 * start restaurant-service: java -jar restaurant-service/target/restaurant-service-0.0.1-SNAPSHOT.jar
 * start shopping-cart-service: java -jar shopping-cart-service/target/shopping-cart-service-0.0.1-SNAPSHOT.jar
 * start payment-service: java -jar payment-service/target/payment-service-0.0.1-SNAPSHOT.jar
-* start steps following steps-to-test.txt in folder "design"
+* follow steps described in steps-to-test.txt in folder "design"
   
 
 License
