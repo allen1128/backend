@@ -25,17 +25,16 @@ Running
 
 Make sure Java >= 8, [Maven](http://maven.apache.org/) >= 3.0, Mysql >=5.7.18, Docker >=17.06.1-ce are installed.
 
-1. git clone https://github.com/allen1128/backend/
-2. cd backend/online-food-order
-3. mvn clean install
-4. start rabbimq server: docker-compose up
-5. start the eureka server: java -jar framework/eureka-server/target/eureka-server-0.0.1-SNAPSHOT.jar
-6. start hystrix dashboard: java -jar framework/hystrix-dashboard/target/eureka-server-0.0.1-SNAPSHOT.jar
-7. start the rest of services:
-
-java -jar payment-service/target/payment-service-0.0.1-SNAPSHOT.jar
-java -jar restaurant-service/target/restaurant-service-0.0.1-SNAPSHOT.jar
-java -jar shopping-cart-service/target/shopping-cart-service-0.0.1-SNAPSHOT.jar
+* git clone https://github.com/allen1128/backend/
+* cd backend/online-food-order
+* mvn clean install
+* start rabbimq server: docker-compose up
+* start the eureka server: java -jar framework/eureka-server/target/eureka-server-0.0.1-SNAPSHOT.jar
+* start hystrix dashboard: java -jar framework/hystrix-dashboard/target/eureka-server-0.0.1-SNAPSHOT.jar
+* start restaurant-service: java -jar restaurant-service/target/restaurant-service-0.0.1-SNAPSHOT.jar
+* start shopping-cart-service: java -jar shopping-cart-service/target/shopping-cart-service-0.0.1-SNAPSHOT.jar
+* start payment-service: java -jar payment-service/target/payment-service-0.0.1-SNAPSHOT.jar
+  
 
 License
 -------
