@@ -6,7 +6,7 @@ An example backend application based on microservices architecture that use spri
 About
 -----
 
-The project aims to demonstrate the Java implementation of a simple REST interface. The following topics are covered.
+The project aims to demonstrate the Java implementation of REST API using various technologies. The following topics are covered.
 
 1. Architecture diagram.
 2. API design
