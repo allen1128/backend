@@ -13,6 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -87,18 +88,17 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Long addToCart(Long cartId, Long dishId, int quantity) {
         log.info("sending add request to shopping-cart-service");
         Dish dish = dishRepository.getOne(dishId);
-
         MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<String, Object>();
         bodyMap.add("cartId", cartId);
-        bodyMap.add("userName", "xl");
+        bodyMap.add("userName", "dummy user"); //this needs to be enhanced.
         bodyMap.add("externalItemId", dishId);
-        bodyMap.add("price", dish.getPrice());
+        bodyMap.add("price", (Float) dish.getPrice());
         bodyMap.add("name", dish.getName());
         bodyMap.add("quantity", quantity);
         return restTemplate.postForObject(shoppingCartService + "/cart/add", bodyMap, Long.class);
     }
 
-    public Long addToCartFallback(Long cartId, Long dishId, int quantity) {
+    public Long addToCartFallback(Long cartId, String userName, Long dishId, int quantity) {
         log.error("fallback add to cart is used");
         return -1l;
     }
@@ -106,7 +106,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     @HystrixCommand(fallbackMethod = "removeFromCartFallback")
     public Long removeFromCart(Long cardId, Long dishId) {
-        return addToCart(cardId, dishId, 0);
+        return addToCart(cardId, dishId,0);
     }
 
     public Long removeFromCartFallback(Long cartId, Long dishId){

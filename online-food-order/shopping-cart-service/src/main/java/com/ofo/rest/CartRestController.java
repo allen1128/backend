@@ -45,7 +45,7 @@ public class CartRestController {
     }
 
     @RequestMapping(value="/add", method=RequestMethod.POST)
-    public Long add(Long cartId, String userName, Long externalItemId, float price, String name, int quantity){
+    public Long add(Long cartId, String userName, Long externalItemId, Float price, String name, int quantity){
         Long result = -1l;
 
         CartItem ci = new CartItem(externalItemId, price, name, quantity);

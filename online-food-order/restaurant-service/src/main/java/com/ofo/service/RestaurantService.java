@@ -20,7 +20,7 @@ public interface RestaurantService {
     Long addToCart(Long cartId, Long dishId, int quantity);
     Long removeFromCart(Long cardId, Long dishId);
     Long addNoteToCart(Long cartId, String note);
-    Receipt pay(Long cartId, CreditCard creditCard);
+    Receipt pay(Long cartId,  CreditCard creditCard);
     Restaurant findOne(Long restaurantId);
     Long addAddress(Long cartId, Address address);
 }

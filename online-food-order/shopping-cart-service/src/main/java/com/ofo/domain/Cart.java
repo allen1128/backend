@@ -67,7 +67,7 @@ public class Cart {
         this.cartType = cartType;
     }
 
-    public float getTotal(Set<CartItem> cartItems) {
+    public float getTotal() {
         this.total = 0.0f;
         for (CartItem ci : cartItems) {
             this.total += ci.getPrice() * ci.getQuantity();

@@ -1,0 +1,6 @@
+1. POST http://localhost:9002/restaurants/ with restaurant.json in body
+2. POST http://localhost:9002/restaurants/addtocart/0/3/1 to add dish to cart. 0 will create a new cart.
+the new cart id is returned.
+3. POST http://localhost:9002/restaurants/deliveryaddress/ with delivery_address.json in body
+4. POST http://localhost:9002/restaurants/pay/{cartid} with credit_card.json in body
+5. Wait for a few seconds, rerun step 4 to get the payment Id, expected delivery time in minutes, etc.

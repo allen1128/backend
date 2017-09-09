@@ -1,0 +1,57 @@
+[
+  {
+    "name": "XiBei",
+    "description": "description",
+    "email": "contactus@xibei.com",
+    "cuisineType": "Chinese",
+    "rating": 0.75,
+    "avgPrice": 31.3,
+    "deliveryEnabled": true,
+    "parkingEnabled": true,
+    "reservationEnabled": false,
+    "lastUpdated": null,
+    "createdAt": null,
+    "address": {
+      "apt": "1",
+      "street": "HuaMu Road",
+      "city": "Shanghai",
+      "state": "Shanghai",
+      "country": "China",
+      "postalCode": "201203"
+    },
+    "menu": []
+  },
+  {
+    "name": "BunkOne",
+    "description": "description",
+    "email": "contactus@bunkone.com",
+    "cuisineType": "Chinese",
+    "rating": 0.85,
+    "avgPrice": 100.0,
+    "deliveryEnabled": true,
+    "parkingEnabled": true,
+    "reservationEnabled": false,
+    "lastUpdated": null,
+    "createdAt": null,
+    "address": {
+      "apt": "1",
+      "street": "NanJing East",
+      "city": "Shanghai",
+      "state": "Shanghai",
+      "country": "China",
+      "postalCode": "205204"
+    },
+    "menu": [
+      {
+        "price": 6.5,
+        "name": "hot and sour chicken",
+        "description": "chicken, vinegar, salt, SMG"
+      },
+      {
+        "price": 7.5,
+        "name": "pineapple chicken",
+        "description": "pineapple, sugar, chicken"
+      }
+    ]
+  }
+]
