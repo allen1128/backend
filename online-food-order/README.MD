@@ -23,20 +23,25 @@ Running
 -------
 
 Make sure Java >= 8, [Maven](http://maven.apache.org/) >= 3.0, Mysql >=5.7.18, Docker >=17.06.1-ce are installed.
-git clone https://github.com/allen1128/backend/online-food-order
-cd online-food-order
-mvn clean install
 
-1. start the eureka server
+git clone https://github.com/allen1128/backend/
+cd backend/online-food-order
+mvn clean install
+1. start rabbimq server
+docker-compose up
+
+2. start the eureka server
 java -jar framework/eureka-server/target/eureka-server-0.0.1-SNAPSHOT.jar
 
-2. start hystrix dashboard
+3. start hystrix dashboard
 java -jar framework/hystrix-dashboard/target/eureka-server-0.0.1-SNAPSHOT.jar
 
+4. start the rest of services.
+java -jar payment-service/target/payment-service-0.0.1-SNAPSHOT.jar
+java -jar restaurant-service/target/restaurant-service-0.0.1-SNAPSHOT.jar
+java -jar shopping-cart-service/target/shopping-cart-service-0.0.1-SNAPSHOT.jar
 
+License
+-------
 
-some explanation for the project design: the project uses the spring cloud infrastructure for implementating the microservices. Eureka 
-server is used for service registration and discovery. Zuul for API gateway. Restaurant Discovery service is an independent services.
-Food Order Service uses RabbitMQ to communicate with the Payment service. Mysql is used by each service for data persistency.
-
-
+[The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
