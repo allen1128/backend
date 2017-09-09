@@ -32,10 +32,11 @@ Make sure Java >= 8, [Maven](http://maven.apache.org/) >= 3.0, Mysql >=5.7.18, D
 * mvn clean install
 * start rabbimq server: docker-compose up
 * start the eureka server: java -jar framework/eureka-server/target/eureka-server-0.0.1-SNAPSHOT.jar
-* start hystrix dashboard: java -jar framework/hystrix-dashboard/target/eureka-server-0.0.1-SNAPSHOT.jar
+* start hystrix dashboard: java -jar framework/hystrix-dashboard/target/hystrix-dashboard-0.0.1-SNAPSHOT.jar
 * start restaurant-service: java -jar restaurant-service/target/restaurant-service-0.0.1-SNAPSHOT.jar
 * start shopping-cart-service: java -jar shopping-cart-service/target/shopping-cart-service-0.0.1-SNAPSHOT.jar
 * start payment-service: java -jar payment-service/target/payment-service-0.0.1-SNAPSHOT.jar
+* start steps following steps-to-test.txt in folder "design"
   
 
 License
