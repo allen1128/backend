@@ -18,6 +18,7 @@ Technologies
 * [Hibernate](http://hibernate.org/)
 * [Spring Cloud](http://projects.spring.io/spring-cloud/)
 * [Spring Boot](http://projects.spring.io/spring-boot/)
+* [RabbitMQ](https://www.rabbitmq.com/)
 
 Running
 -------
