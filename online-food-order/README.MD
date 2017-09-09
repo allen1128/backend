@@ -19,6 +19,8 @@ Technologies
 * [Spring Cloud](http://projects.spring.io/spring-cloud/)
 * [Spring Boot](http://projects.spring.io/spring-boot/)
 * [RabbitMQ](https://www.rabbitmq.com/)
+* [JUnit](http://junit.org/junit4/)
+* [Docker](https://www.docker.com/)
 
 Running
 -------
