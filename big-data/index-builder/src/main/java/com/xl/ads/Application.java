@@ -35,7 +35,7 @@ public class Application {
                     return;
                 }
 
-                //ad.adId = adJson.getLong("adId");
+                ad.adId = adJson.getLong("adId");
                 ad.campaignId = adJson.getLong("campaignId");
                 ad.brand = adJson.isNull("brand") ? "" : adJson.getString("brand");
                 ad.price = adJson.isNull("price") ? 100.0 : adJson.getDouble("price");

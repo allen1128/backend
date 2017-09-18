@@ -87,7 +87,7 @@ public class MySQLAccess {
         sql_string = "insert into " + d_db_name + ".ad values(?,?,?,?,?,?,?,?,?,?,?)";
         try {
             ad_info = d_connect.prepareStatement(sql_string);
-            //ad_info.setLong(1, ad.adId);
+            ad_info.setLong(1, ad.adId);
             ad_info.setLong(2, ad.campaignId);
             String keyWords = Utility.strJoin(ad.keyWords, ",");
             ad_info.setString(3, keyWords);
