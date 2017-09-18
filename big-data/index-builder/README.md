@@ -15,6 +15,6 @@ Preparation
 
 Run
 ----
-1. build project and run the jar file.
+1. run application.java
 2. check the mysql workbench in schema "searchads" for generated ad records.
 
