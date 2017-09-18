@@ -1,17 +1,16 @@
 package com.xl.ads;
 
+import com.xl.ads.domain.Ad;
+import com.xl.ads.domain.Campaign;
+import net.spy.memcached.AddrUtil;
+import net.spy.memcached.ConnectionFactoryBuilder;
+import net.spy.memcached.FailureMode;
+import net.spy.memcached.MemcachedClient;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import com.xl.ads.domain.Ad;
-import com.xl.ads.domain.Campaign;
-
-import net.spy.memcached.MemcachedClient;
-import net.spy.memcached.AddrUtil;
-import net.spy.memcached.ConnectionFactoryBuilder;
-import net.spy.memcached.FailureMode;
 
 public class IndexBuilder {
     private int EXP = 0; //0: never expire
@@ -26,7 +25,7 @@ public class IndexBuilder {
 
 
     public void Close() {
-        if(mysql != null) {
+        if (mysql != null) {
             try {
                 mysql.close();
             } catch (Exception e) {
@@ -35,8 +34,8 @@ public class IndexBuilder {
             }
         }
     }
-    public IndexBuilder(String memcachedServer,int memcachedPortal,String mysqlHost,String mysqlDb,String user,String pass)
-    {
+
+    public IndexBuilder(String memcachedServer, int memcachedPortal, String mysqlHost, String mysqlDb, String user, String pass) {
         mMemcachedServer = memcachedServer;
         mMemcachedPortal = memcachedPortal;
         mysql_host = mysqlHost;
@@ -45,41 +44,35 @@ public class IndexBuilder {
         mysql_pass = pass;
         mysql = new MySQLAccess(mysql_host, mysql_db, mysql_user, mysql_pass);
         String address = mMemcachedServer + ":" + mMemcachedPortal;
-        try
-        {
+        try {
             cache = new MemcachedClient(new ConnectionFactoryBuilder().setDaemon(true).setFailureMode(FailureMode.Retry).build(), AddrUtil.getAddresses(address));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    public Boolean buildInvertIndex(Ad ad)
-    {
+
+    public Boolean buildInvertIndex(Ad ad) {
         String keyWords = Utility.strJoin(ad.keyWords, ",");
         List<String> tokens = Utility.cleanedTokenize(keyWords);
-        for(int i = 0; i < tokens.size();i++)
-        {
+        for (int i = 0; i < tokens.size(); i++) {
             String key = tokens.get(i);
-            if(cache.get(key) instanceof Set)
-            {
+            if (cache.get(key) instanceof Set) {
                 @SuppressWarnings("unchecked")
-                Set<Long>  adIdList = (Set<Long>)cache.get(key);
+                Set<Long> adIdList = (Set<Long>) cache.get(key);
                 adIdList.add(ad.adId);
                 cache.set(key, EXP, adIdList);
-            }
-            else
-            {
-                Set<Long>  adIdList = new HashSet<Long>();
+            } else {
+                Set<Long> adIdList = new HashSet<Long>();
                 adIdList.add(ad.adId);
                 cache.set(key, EXP, adIdList);
             }
         }
         return true;
     }
-    public Boolean buildForwardIndex(Ad ad)
-    {
-        try
-        {
+
+    public Boolean buildForwardIndex(Ad ad) {
+        try {
             mysql.addAdData(ad);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -88,10 +81,9 @@ public class IndexBuilder {
         }
         return true;
     }
-    public Boolean updateBudget(Campaign camp)
-    {
-        try
-        {
+
+    public Boolean updateBudget(Campaign camp) {
+        try {
             mysql.addCampaignData(camp);
         } catch (Exception e) {
             // TODO Auto-generated catch block
