@@ -18,4 +18,6 @@ Run
 2. check the mysql workbench in schema "searchads" for generated ad records.
 
 
-
+Special Notice
+--------------
+adId is incrementally generated automatically as WebCrawler will always return empty adId.
