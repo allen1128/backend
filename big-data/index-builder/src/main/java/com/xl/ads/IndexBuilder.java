@@ -1,7 +1,6 @@
 package com.xl.ads;
 
 import com.xl.ads.domain.Ad;
-import com.xl.ads.domain.Campaign;
 import net.spy.memcached.AddrUtil;
 import net.spy.memcached.ConnectionFactoryBuilder;
 import net.spy.memcached.FailureMode;
@@ -14,12 +13,14 @@ import java.util.Set;
 
 public class IndexBuilder {
     private int EXP = 0; //0: never expire
-    private String mMemcachedServer;
-    private int mMemcachedPortal;
-    private String mysql_host;
-    private String mysql_db;
-    private String mysql_user;
-    private String mysql_pass;
+
+    private String mMemcachedServer = "127.0.0.1";
+    private int mMemcachedPortal = 11211;
+    private String mysql_host = "127.0.0.1:3306";
+    private String mysql_db = "searchads";
+    private String mysql_user = "root";
+    private String mysql_pass = "";
+
     private MySQLAccess mysql;
     private MemcachedClient cache;
 
@@ -35,13 +36,7 @@ public class IndexBuilder {
         }
     }
 
-    public IndexBuilder(String memcachedServer, int memcachedPortal, String mysqlHost, String mysqlDb, String user, String pass) {
-        mMemcachedServer = memcachedServer;
-        mMemcachedPortal = memcachedPortal;
-        mysql_host = mysqlHost;
-        mysql_db = mysqlDb;
-        mysql_user = user;
-        mysql_pass = pass;
+    public IndexBuilder() {
         mysql = new MySQLAccess(mysql_host, mysql_db, mysql_user, mysql_pass);
         String address = mMemcachedServer + ":" + mMemcachedPortal;
         try {
@@ -74,17 +69,6 @@ public class IndexBuilder {
     public Boolean buildForwardIndex(Ad ad) {
         try {
             mysql.addAdData(ad);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public Boolean updateBudget(Campaign camp) {
-        try {
-            mysql.addCampaignData(camp);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

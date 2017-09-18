@@ -1,7 +1,6 @@
 package com.xl.ads;
 
 import com.xl.ads.domain.Ad;
-import com.xl.ads.domain.Campaign;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -31,7 +30,6 @@ public class MySQLAccess {
         try {
             getConnection();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -89,7 +87,7 @@ public class MySQLAccess {
         sql_string = "insert into " + d_db_name + ".ad values(?,?,?,?,?,?,?,?,?,?,?)";
         try {
             ad_info = d_connect.prepareStatement(sql_string);
-            ad_info.setLong(1, ad.adId);
+            //ad_info.setLong(1, ad.adId);
             ad_info.setLong(2, ad.campaignId);
             String keyWords = Utility.strJoin(ad.keyWords, ",");
             ad_info.setString(3, keyWords);
@@ -148,85 +146,5 @@ public class MySQLAccess {
             }
         }
         return ad;
-    }
-
-    public void addCampaignData(Campaign campaign) throws Exception {
-        Connection connect = null;
-        boolean isExist = false;
-        String sql_string = "select campaignId from " + d_db_name + ".campaign where campaignId=" + campaign.campaignId;
-        try {
-            isExist = isRecordExist(sql_string);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw e;
-        } finally {
-            if (connect != null && isExist) {
-                connect.close();
-            }
-        }
-        if (isExist) {
-            return;
-        }
-        PreparedStatement camp_info = null;
-        sql_string = "insert into " + d_db_name + ".campaign values(?,?)";
-        try {
-            camp_info = connect.prepareStatement(sql_string);
-            camp_info.setLong(1, campaign.campaignId);
-            camp_info.setDouble(2, campaign.budget);
-            camp_info.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw e;
-        } finally {
-            if (camp_info != null) {
-                camp_info.close();
-            }
-            if (connect != null) {
-                connect.close();
-            }
-        }
-    }
-
-    public Double getBudget(Long campaignId) throws Exception {
-        PreparedStatement selectStatement = null;
-        ResultSet result_set = null;
-        Double budget = 0.0;
-        String sql_string = "select budget from " + d_db_name + ".campaign where campaignId=" + campaignId;
-        System.out.println("sql: " + sql_string);
-        try {
-            selectStatement = d_connect.prepareStatement(sql_string);
-            result_set = selectStatement.executeQuery();
-            while (result_set.next()) {
-                budget = result_set.getDouble("budget");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw e;
-        } finally {
-            if (selectStatement != null) {
-                selectStatement.close();
-            }
-            if (result_set != null) {
-                result_set.close();
-            }
-        }
-        return budget;
-    }
-
-    public void updateCampaignData(Long campaignId, Double newBudget) throws Exception {
-        PreparedStatement updateStatement = null;
-        String sql_string = "update " + d_db_name + ".campaign set budget=" + newBudget + " where campaignId=" + campaignId;
-        System.out.println("sql: " + sql_string);
-        try {
-            updateStatement = d_connect.prepareStatement(sql_string);
-            updateStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw e;
-        } finally {
-            if (updateStatement != null) {
-                updateStatement.close();
-            }
-        }
     }
 }

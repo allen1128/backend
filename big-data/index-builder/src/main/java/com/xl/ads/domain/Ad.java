@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Ad implements Serializable {
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     public Long adId;
     public Long campaignId;
@@ -26,27 +23,4 @@ public class Ad implements Serializable {
     public String detail_url; // required
     public String query; //required
     public String category;
-
-    @Override
-    public String toString() {
-        return "Ad{" +
-                "adId=" + adId +
-                ", campaignId=" + campaignId +
-                ", relevanceScore=" + relevanceScore +
-                ", pClick=" + pClick +
-                ", bidPrice=" + bidPrice +
-                ", rankScore=" + rankScore +
-                ", qualityScore=" + qualityScore +
-                ", costPerClick=" + costPerClick +
-                ", position=" + position +
-                ", title='" + title + '\'' +
-                ", price=" + price +
-                ", thumbnail='" + thumbnail + '\'' +
-                ", description='" + description + '\'' +
-                ", brand='" + brand + '\'' +
-                ", detail_url='" + detail_url + '\'' +
-                ", query='" + query + '\'' +
-                ", category='" + category + '\'' +
-                '}';
-    }
 }

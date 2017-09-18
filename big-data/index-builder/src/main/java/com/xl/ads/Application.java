@@ -10,15 +10,12 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
 public class Application {
+
     private final static String IN_QUEUE_NAME = "q_product";
-    private final static String MEMCACHED_IP = "127.0.0.1";
-    private final static int MEMCACHED_PORT = 11211;
-    private final static String SQL_URL = "127.0.0.1:3306";
-    private final static String SQL_SCHEMA = "Crawler";
-    private final static String SQL_USER = "root";
-    private final static String SQL_PASS = "";
 
     public static void main(String args[]) throws IOException, TimeoutException {
+
+        final IndexBuilder indexBuilder = new IndexBuilder();
         ConnectionFactory factory = new ConnectionFactory();
         Connection connection = factory.newConnection();
         Channel inChannel = connection.createChannel();
@@ -38,7 +35,7 @@ public class Application {
                     return;
                 }
 
-                ad.adId = adJson.getLong("adId");
+                //ad.adId = adJson.getLong("adId");
                 ad.campaignId = adJson.getLong("campaignId");
                 ad.brand = adJson.isNull("brand") ? "" : adJson.getString("brand");
                 ad.price = adJson.isNull("price") ? 100.0 : adJson.getDouble("price");
@@ -55,7 +52,6 @@ public class Application {
                 for (int j = 0; j < keyWords.length(); j++) {
                     ad.keyWords.add(keyWords.getString(j));
                 }
-                IndexBuilder indexBuilder = new IndexBuilder(MEMCACHED_IP, MEMCACHED_PORT, SQL_URL, SQL_SCHEMA, SQL_USER, SQL_PASS);
                 if (!indexBuilder.buildInvertIndex(ad) || (!indexBuilder.buildForwardIndex(ad))) {
                     System.out.println("error saving " + ad.toString());
                 }
