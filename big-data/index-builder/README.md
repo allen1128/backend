@@ -6,10 +6,11 @@ Preparation
 
 1. git clone https://github.com/allen1128/backend
 2. import project backend/big-data/index-builder to intellij
-3. start mysql service
-4. execute resources/DB_TABLE.sql to generate table "ad" in MySQL Workbench.
-5. start rabbitMQ and create a queue called "q_product"
-6. push a message with the data in resources/payload.json
+3. start Memcached service
+4. start mysql service
+5. execute resources/DB_TABLE.sql to generate table "ad" in MySQL Workbench.
+6. start rabbitMQ and create a queue called "q_product"
+7. push a message with the data in resources/payload.json
 
 
 
